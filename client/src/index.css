@@ -1,0 +1,104 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.nav-container {
+  display: flex;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  padding: 1rem;
+}
+
+.nav-box {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-radius: 75px;
+  background: rgba(0, 0, 255, 0.39);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+}
+
+.nav-logo {
+  font-size: 2.5rem;
+  color: white;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  height: 2rem;
+}
+
+.search-box input {
+  height: 100%;
+  width: 12rem;
+  border: none;
+  outline: none;
+  border-top-left-radius: 10px;
+  padding: 0 1rem;
+  color: black;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.search-box .search-icon {
+  width: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background: teal;
+  border-bottom-right-radius: 10px;
+  cursor: pointer;
+}
+
+.nav-links {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  transition: all .5s ease;
+}
+
+.nav-links a.active {
+  color: teal;
+}
+
+.nav-box a {
+  color: white;
+  text-decoration: none;
+}
+
+.nav-box button {
+  border: 0;
+  outline: 0;
+  border-radius: 20px;
+  padding: 10px 15px;
+  cursor: pointer;
+  color: white;
+  background: teal;
+}
+
+.background-toggle-box {
+  border: 1px solid black;
+  padding: 8px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
