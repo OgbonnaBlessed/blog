@@ -88,7 +88,7 @@ const SignUp = () => {
           <FcGoogle/>
           <p>Continue with Google</p>
         </button>
-        <Link to='/Sign-in' className="sign-in">
+        <Link to='/signin' className="sign-in">
           Have an account? <span>Sign in</span>
         </Link>
         {errorMessage && 
