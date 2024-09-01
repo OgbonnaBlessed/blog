@@ -23,7 +23,7 @@ const Header = () => {
             <div className="background-toggle-box">
                 <FaMoon size={18}/>
             </div>
-            <Link to='/Sign-up'>
+            <Link to='/signup'>
                 <button type="button">Sign up</button>
             </Link>
         </div>
