@@ -4,6 +4,13 @@
   box-sizing: border-box;
 }
 
+:root {
+  --secondary-color: rgba(4, 122, 14, 0.438);
+  --main-color: rgb(20, 46, 0);
+  --primary-color: rgba(6, 6, 151, 0.801);
+  --bg-color: linear-gradient(-135deg, rgba(4, 122, 14, 0.438) 0%, rgb(20, 46, 0) 40%);
+}
+
 .nav-container {
   display: flex;
   position: fixed;
@@ -19,7 +26,7 @@
   justify-content: space-between;
   padding: 1rem 2rem;
   border-radius: 75px;
-  background: rgba(0, 0, 255, 0.39);
+  background: var(--primary-color);
   -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
   position: absolute;
@@ -28,7 +35,7 @@
 }
 
 .nav-logo {
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: white;
 }
 
@@ -56,7 +63,7 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-  background: teal;
+  background: var(--secondary-color);
   border-bottom-right-radius: 10px;
   cursor: pointer;
 }
@@ -90,7 +97,7 @@
   padding: 10px 15px;
   cursor: pointer;
   color: white;
-  background: teal;
+  background: var(--secondary-color);
 }
 
 .background-toggle-box {
@@ -100,5 +107,84 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+}
+
+.sign-up-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg-color);
+}
+
+.sign-up-box {
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem 1rem;
+  border-radius: 20px;
+}
+
+.sign-up-box h1 {
+  text-align: center;
+}
+
+.input-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.input-fields .input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.input-fields .input-container p {
+  font-size: 1.2rem;
+}
+
+.input-container input {
+  width: 22rem;
+  height: 3rem;
+  border-radius: 75px;
+  border: 0;
+  outline: 0;
+  padding: 0 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.sign-up-box button {
+  border-radius: 5px;
+  border: 0;
+  outline: 0;
+  font-size: 1rem;
+  color: white;
+  background: var(--secondary-color);
+  padding: 12px 0;
+  cursor: pointer;
+}
+
+.sign-up-box .google {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.sign-in {
+  font-size: 1.2rem;
+  color: black;
+  text-decoration: none;
+}
+
+.sign-in span {
+  color: var(--secondary-color);
   cursor: pointer;
 }
