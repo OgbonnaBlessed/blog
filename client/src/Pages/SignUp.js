@@ -46,7 +46,7 @@ const SignUp = () => {
       setLoading(false);
 
       if (res.ok) {
-        navigate('/Sign-in');
+        navigate('/signin');
       }
 
     } catch (error) {
@@ -88,9 +88,12 @@ const SignUp = () => {
           <FcGoogle/>
           <p>Continue with Google</p>
         </button>
-        <Link to='/signin' className="sign-in">
-          Have an account? <span>Sign in</span>
-        </Link>
+        <div className="sign-in">
+          Have an account? 
+          <Link to='/signin'>
+          <span> Sign in</span>
+          </Link>
+        </div>
         {errorMessage && 
         <p className="error">
           {errorMessage}
