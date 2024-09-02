@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import OAuth from '../Components/OAuth';
+import { useSelector } from 'react-redux'
 
 // CSS for the spinner
 const spinnerStyle = {
@@ -16,6 +17,7 @@ const SignUp = () => {
   const [formData, setFormData] = useState({});
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { theme } = useSelector(state => state.theme);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -57,7 +59,7 @@ const SignUp = () => {
 
   return (
     <div className='sign-up-container'>
-      <div className="sign-up-box">
+      <div className={`sign-up-box ${theme === 'light' ? 'dark-box-shadow' : 'light-box-shadow'}`}>
         <h1>Sign up</h1>
         <form className="input-fields" onSubmit={handleSubmit}>
           <div className="input-container">

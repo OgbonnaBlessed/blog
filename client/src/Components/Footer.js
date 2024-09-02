@@ -1,10 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { FaFacebook, FaLinkedin, FaInstagram, FaYoutube } from 'react-icons/fa'
+import { useSelector } from 'react-redux'
 
 const Footer = () => {
+  const { theme } = useSelector(state => state.theme);
+
   return (
-    <div className='Footer'>
+    <div className={`Footer ${theme === 'dark' ? 'dark-bg' : ''}`}>
       <div className="top-box">
         <div className="programs">
             <h2>Programs</h2>

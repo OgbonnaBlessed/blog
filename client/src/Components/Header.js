@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { FaMoon, FaSearch, FaUser } from 'react-icons/fa'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { toggleTheme } from '../redux/theme/themeSlice'
+import { MdSunny } from 'react-icons/md'
 
 const Header = () => {
     const { currentUser } = useSelector(state => state.user);
+    const { theme } = useSelector(state => state.theme);
     const [userInfo, setUserInfo] = useState(false);
+    const dispatch = useDispatch();
 
     const displayInfo = () => {
         setUserInfo(!userInfo);
@@ -28,8 +32,12 @@ const Header = () => {
                 <NavLink to='/About'>About</NavLink>
                 <NavLink to='/Projects'>Projects</NavLink>
             </div>
-            <div className="background-toggle-box">
-                <FaMoon size={18}/>
+            <div className="background-toggle-box" onClick={() => dispatch(toggleTheme())}>
+                {
+                    theme === 'light' 
+                    ? (<FaMoon className='toggle-icon' size={18}/>)
+                    : (<MdSunny className='toggle-icon' size={20} />)
+                }
             </div>
             {
                 currentUser 

@@ -17,6 +17,7 @@ const spinnerStyle = {
 const SignIn = () => {
   const [formData, setFormData] = useState({});
   const { loading, error: errorMessage } = useSelector(state => state.user);
+  const { theme } = useSelector(state => state.theme);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -57,7 +58,7 @@ const SignIn = () => {
 
   return (
     <div className='sign-up-container'>
-      <div className="sign-up-box">
+      <div className={`sign-up-box ${theme === 'light' ? 'dark-box-shadow' : 'light-box-shadow'}`}>
         <h1>Sign In</h1>
         <form className="input-fields" onSubmit={handleSubmit}>
           <div className="input-container">
