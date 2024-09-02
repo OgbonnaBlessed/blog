@@ -54,7 +54,7 @@ const Header = () => {
                         <div className="user-info-drop-down">
                             <div className="user-name">{currentUser.username}</div>
                             <div className="email">{currentUser.email}</div>
-                            <Link to="/Dashboard?=profile">Profile</Link>
+                            <Link to="/Dashboard?tab=profile">Profile</Link>
                             <button type='button'>Log out</button>
                         </div>
                         }

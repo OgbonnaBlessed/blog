@@ -26,7 +26,7 @@
 
 .theme-container {
   transition: all 0.3s ease;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 body {
@@ -405,4 +405,67 @@ button:disabled {
   position: absolute;
   right: -10px;
   top: 3.5rem;
+}
+
+.dashboard {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+}
+
+.side-bar {
+  width: 15rem;
+  display: flex;
+  flex-direction: column;
+  border-right: 2px solid var(--secondary-color);
+  height: 100%;
+  background: var(--main-color);
+}
+
+.logo-contain {
+  font-size: 3rem;
+  font-family: cursive;
+  padding: 2rem 1rem;
+  box-shadow: inset 0 0 1rem var(--secondary-color);
+  width: 100%;
+  border-radius: 5px;
+}
+
+.side-bar-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 2rem 10px;
+  /* align-items: center; */
+}
+
+.profile-direct {
+  display: flex;
+  justify-content: space-between;
+  box-shadow: inset 0 0 .3rem var(--secondary-color);
+  border-radius: 10px;
+  padding: 1rem;
+  cursor: pointer;
+  width: 100%;
+  align-items: flex-end;
+}
+
+.profile-direct.active {
+  background-color: var(--secondary-color);
+}
+
+.profile-direct span {
+  align-self: center;
+  background: var(--secondary-color);
+  border-radius: 2px;
+  padding: 2px 8px;
+}
+
+.side-bar-content .sign-out {
+  display: flex;
+  font-size: 1.2rem;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
 }
