@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import {FcGoogle} from 'react-icons/fc'
 import { Link, useNavigate } from 'react-router-dom'
 import { signInSuccess, signInFailure, signInStart } from '../redux/user/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import OAuth from '../Components/OAuth';
 
 // CSS for the spinner
 const spinnerStyle = {
@@ -44,7 +44,7 @@ const SignIn = () => {
       if (data.success === false) {
         dispatch(signInFailure(data.message));
       };
-      
+
       if (res.ok) {
         dispatch(signInSuccess(data));
         navigate('/');
@@ -80,10 +80,7 @@ const SignIn = () => {
             }
           </button>
         </form>
-        <button type='button' className="google">
-          <FcGoogle/>
-          <p>Continue with Google</p>
-        </button>
+        <OAuth/>
         <div className="sign-in">
           Don't have an account? 
           <Link to='/signup' >

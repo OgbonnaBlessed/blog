@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import {FcGoogle} from 'react-icons/fc'
 import { Link, useNavigate } from 'react-router-dom'
+import OAuth from '../Components/OAuth';
 
 // CSS for the spinner
 const spinnerStyle = {
@@ -84,10 +84,7 @@ const SignUp = () => {
             }
           </button>
         </form>
-        <button type='button' className="google">
-          <FcGoogle/>
-          <p>Continue with Google</p>
-        </button>
+        <OAuth />
         <div className="sign-in">
           Have an account? 
           <Link to='/signin'>
