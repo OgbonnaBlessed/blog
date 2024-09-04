@@ -4,12 +4,14 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/
 import { app } from '../firebase';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { updateFailure, updateStart, updateSuccess } from '../redux/user/userSlice';
+import { updateFailure, updateStart, updateSuccess, deleteUserFailure, deleteUserStart, deleteUserSuccess } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
+import { FaTimes } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion'
 
 const DashboardProfile = () => {
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, error } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(currentUser.profilePicture);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
@@ -18,6 +20,7 @@ const DashboardProfile = () => {
   const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
   const [updateUserError, setUpdateUserError] = useState(null);
   const [formData, setFormData] = useState({});
+  const [showModal, setShowModal] = useState(false);
   const filePickerRef = useRef();
 
   const handleImageChange = (e) => {
@@ -119,6 +122,26 @@ const DashboardProfile = () => {
     }
   }
 
+  const handleDeleteUser = async () => {
+    setShowModal(false);
+
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: 'DELETE'
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        dispatch(deleteUserFailure(data.message));
+      } else {
+        dispatch(deleteUserSuccess(data))
+      }
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message))
+    }
+  }
+
   return (
     <div className='profile'>
       <div className="profile-container">
@@ -189,7 +212,7 @@ const DashboardProfile = () => {
           <button type="submit">Update</button>
         </form>
         <div className="profile-text">
-          <p>Delete account</p>
+          <p onClick={() => setShowModal(!showModal)}>Delete account</p>
           <p>Sign out</p>
         </div>
         {updateUserSuccess 
@@ -203,6 +226,50 @@ const DashboardProfile = () => {
               {updateUserError}
             </p>)
         }
+        {
+          error &&
+          (
+            <p>{error}</p>
+          )
+        }
+        <AnimatePresence>
+          {showModal &&
+            <motion.div 
+            initial={{
+              opacity: 0
+            }}
+            animate={{
+              opacity: 1
+            }}
+            exit={{
+              opacity: 0
+            }}
+            className="modal-container"
+          >
+            <motion.div 
+              initial={{
+                scale: 0
+              }}
+              animate={{
+                scale: 1
+              }}
+              exit={{
+                scale: 0
+              }}
+              className="modal-box">
+              <FaTimes 
+                className='close-modal'
+                onClick={() => setShowModal(false)}
+              />
+              <p>Are you sure you want to delete your account?</p>
+              <motion.div className="actions">
+                <button type="button" onClick={() => handleDeleteUser()}>Delete</button>
+                <button type="button" onClick={() => setShowModal(false)}>Cancel</button>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+          }
+        </AnimatePresence>
       </div>
     </div>
   );

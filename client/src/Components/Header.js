@@ -13,19 +13,19 @@ const Header = () => {
 
     const profileRef = useRef();
 
-    useEffect(() => {
-       const closeProfileBox = (event) => {
-        if (!profileRef.current.contains(event.target)) {
-            setUserInfo(false);
-        }
-       };
+    // useEffect(() => {
+    //    const closeProfileBox = (event) => {
+    //     if (!profileRef.current.contains(event.target)) {
+    //         setUserInfo(false);
+    //     }
+    //    };
 
-       document.addEventListener('mousedown', closeProfileBox);
+    //    document.addEventListener('mousedown', closeProfileBox);
 
-        return () => {
-            document.removeEventListener('mousedown', closeProfileBox);
-        };
-    });
+    //     return () => {
+    //         document.removeEventListener('mousedown', closeProfileBox);
+    //     };
+    // });
 
   return (
     <div className='nav-container'>
