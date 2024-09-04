@@ -4,7 +4,15 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/
 import { app } from '../firebase';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { updateFailure, updateStart, updateSuccess, deleteUserFailure, deleteUserStart, deleteUserSuccess } from '../redux/user/userSlice';
+import { 
+        updateFailure, 
+        updateStart, 
+        updateSuccess, 
+        deleteUserFailure, 
+        deleteUserStart, 
+        deleteUserSuccess,
+        signOutSuccess
+      } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
 import { FaTimes } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion'
@@ -142,6 +150,24 @@ const DashboardProfile = () => {
     }
   }
 
+  const handleSignOut = async () => {
+    try {
+      const res = await fetch('/api/user/signout', {
+        method: 'POST',
+      });
+
+      const  data = await res.json();
+
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        dispatch(signOutSuccess())
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
   return (
     <div className='profile'>
       <div className="profile-container">
@@ -213,7 +239,7 @@ const DashboardProfile = () => {
         </form>
         <div className="profile-text">
           <p onClick={() => setShowModal(!showModal)}>Delete account</p>
-          <p>Sign out</p>
+          <p onClick={() => handleSignOut()}>Sign out</p>
         </div>
         {updateUserSuccess 
         && (<p>

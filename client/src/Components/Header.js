@@ -4,6 +4,7 @@ import { FaMoon, FaSearch, FaUser } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleTheme } from '../redux/theme/themeSlice'
 import { MdSunny } from 'react-icons/md'
+import { signOutSuccess } from '../redux/user/userSlice'
 
 const Header = () => {
     const { currentUser } = useSelector(state => state.user);
@@ -26,6 +27,24 @@ const Header = () => {
     //         document.removeEventListener('mousedown', closeProfileBox);
     //     };
     // });
+
+    const handleSignOut = async () => {
+        try {
+          const res = await fetch('/api/user/signout', {
+            method: 'POST',
+          });
+    
+          const  data = await res.json();
+    
+          if (!res.ok) {
+            console.log(data.message);
+          } else {
+            dispatch(signOutSuccess())
+          }
+        } catch (error) {
+          console.log(error.message);
+        }
+    }
 
   return (
     <div className='nav-container'>
@@ -67,7 +86,7 @@ const Header = () => {
                             <div className="user-name">{currentUser.username}</div>
                             <div className="email">{currentUser.email}</div>
                             <Link to="/Dashboard?tab=profile">Profile</Link>
-                            <button type='button'>Log out</button>
+                            <button type='button' onClick={() => handleSignOut()}>Sign out</button>
                         </div>
                        
                     </div>
