@@ -16,10 +16,11 @@ import {
 import { useDispatch } from 'react-redux';
 import { FaTimes } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion'
+import { Link } from 'react-router-dom';
 
 const DashboardProfile = () => {
   const dispatch = useDispatch();
-  const { currentUser, error } = useSelector((state) => state.user);
+  const { currentUser, error, loading } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(currentUser.profilePicture);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
@@ -57,7 +58,7 @@ const DashboardProfile = () => {
 
   const uploadImage = async () => {
     setImageFileUploading(true);
-    setImageFileUploadError(null);
+    // setImageFileUploadError(null);
     const storage = getStorage(app);
     const fileName = new Date().getTime() + imageFile.name;
     const storageRef = ref(storage, fileName);
@@ -168,6 +169,15 @@ const DashboardProfile = () => {
     }
   }
 
+  const spinnerStyle = {
+    border: '2px solid rgba(0, 0, 0, 0.1)',
+    width: '20px',
+    height: '20px',
+    borderRadius: '50%',
+    borderTopColor: 'rgba(4, 122, 14, 0.438)',
+    animation: 'spin 1s ease-in-out infinite',
+  };
+
   return (
     <div className='profile'>
       <div className="profile-container">
@@ -235,7 +245,22 @@ const DashboardProfile = () => {
             id="password" 
             onChange={handleChange}
           />
-          <button type="submit">Update</button>
+          <button type="submit" disabled={imageFileUploading || loading}>
+            {
+              (imageFileUploading || loading) ? 
+              (<>
+                <div style={spinnerStyle}></div>
+                <span>Loading...</span>
+                </>
+              )
+              : 'Update'
+            }
+          </button>
+          {currentUser.isAdmin && (
+            <Link to='/create-a-post'>
+              <button type="button"> create a post </button>
+            </Link>
+          )}
         </form>
         <div className="profile-text">
           <p onClick={() => setShowModal(!showModal)}>Delete account</p>
