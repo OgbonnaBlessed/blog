@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { FaMoon, FaSearch, FaUser } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
@@ -11,9 +11,21 @@ const Header = () => {
     const [userInfo, setUserInfo] = useState(false);
     const dispatch = useDispatch();
 
-    const displayInfo = () => {
-        setUserInfo(!userInfo);
-    }
+    const profileRef = useRef();
+
+    useEffect(() => {
+       const closeProfileBox = (event) => {
+        if (!profileRef.current.contains(event.target)) {
+            setUserInfo(false);
+        }
+       };
+
+       document.addEventListener('mousedown', closeProfileBox);
+
+        return () => {
+            document.removeEventListener('mousedown', closeProfileBox);
+        };
+    });
 
   return (
     <div className='nav-container'>
@@ -42,31 +54,30 @@ const Header = () => {
             {
                 currentUser 
                 ? (
-                    <div className="user-info-container">
-                        <div className='user-info' onClick={displayInfo}>
+                    <div className="user-info-container" ref={profileRef}>
+                        <div className='user-info' onClick={() => setUserInfo(!userInfo)}>
                             {
                                 currentUser.profilePicture 
                                 ? <img src={currentUser.profilePicture} alt="" />
                                 : <FaUser className='user-icon' size={25} />
                             }
                         </div>
-                        {userInfo &&
-                        <div className="user-info-drop-down">
+                        
+                        <div className={`user-info-drop-down ${userInfo ? 'active' : 'inactive'}`}>
                             <div className="user-name">{currentUser.username}</div>
                             <div className="email">{currentUser.email}</div>
                             <Link to="/Dashboard?tab=profile">Profile</Link>
                             <button type='button'>Log out</button>
                         </div>
-                        }
+                       
                     </div>
-                ) 
-                : (
-                    <>
-                    <Link to='/signup'>
-                        <button type="button">Sign up</button>
-                    </Link>
-                    </>
+                ) : (  <>
+                        <Link to='/signup'>
+                            <button type="button">Sign up</button>
+                        </Link>
+                       </>
                 )
+    
             }
         </div>
     </div>

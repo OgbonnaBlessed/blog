@@ -4,13 +4,20 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/
 import { app } from '../firebase';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { updateFailure, updateStart, updateSuccess } from '../redux/user/userSlice';
+import { useDispatch } from 'react-redux';
 
 const DashboardProfile = () => {
+  const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(currentUser.profilePicture);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
+  const [imageFileUploading, setImageFileUploading] = useState(false);
+  const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
+  const [updateUserError, setUpdateUserError] = useState(null);
+  const [formData, setFormData] = useState({});
   const filePickerRef = useRef();
 
   const handleImageChange = (e) => {
@@ -21,7 +28,6 @@ const DashboardProfile = () => {
       if (file.type.startsWith('image/')) {
         setImageFile(file);
         setImageFileUrl(URL.createObjectURL(file));
-        setImageFileUploadError(null); // Reset any previous errors
       } else {
         // File is not an image
         setImageFileUploadError('Only image files are allowed.');
@@ -39,6 +45,7 @@ const DashboardProfile = () => {
   }, [imageFile]);
 
   const uploadImage = async () => {
+    setImageFileUploading(true);
     setImageFileUploadError(null);
     const storage = getStorage(app);
     const fileName = new Date().getTime() + imageFile.name;
@@ -54,79 +61,130 @@ const DashboardProfile = () => {
       (error) => {
         setImageFileUploadError('Could not upload image (File must be less than 2MB)');
         setImageFileUploadProgress(null);
+        setImageFileUploading(false);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downLoadURL) => {
           setImageFileUrl(downLoadURL);
           setImageFileUploadProgress(null); // Reset progress after successful upload
+          setFormData({ ...formData, profilePicture: downLoadURL });
+          setImageFileUploading(false);
         });
       }
     );
   };
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  }
+  
+  const handleSubmit = async (e) =>{
+    e.preventDefault();
+    setUpdateUserError(null);
+    setUpdateUserSuccess(null);
+
+    if (Object.keys(formData).length === 0) {
+      setUpdateUserError('No changes made');
+      return;
+    }
+
+    if (imageFileUploading) {
+      setUpdateUserError('Please wait for image to upload')
+      return;
+    }
+
+    try {
+      dispatch(updateStart());
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        dispatch(updateFailure(data.message));
+        setUpdateUserError(data.message);
+
+      } else {
+        dispatch(updateSuccess(data));
+        setUpdateUserSuccess("User's profile updated successfully");
+      }
+    } catch (error) {
+      dispatch(updateFailure(error.message));
+      setUpdateUserError(error.message);
+    }
+  }
+
   return (
     <div className='profile'>
       <div className="profile-container">
-        <input 
-          type="file" 
-          accept='image/*' 
-          onChange={handleImageChange} 
-          id="" 
-          ref={filePickerRef}
-          className='image-change'
-        />
-        <div className="img-box" onClick={() => filePickerRef.current.click()}>
-          {
-            imageFileUploadProgress && (
-              <CircularProgressbar
-                value={imageFileUploadProgress || 0}
-                text={`${imageFileUploadProgress}%`}
-                strokeWidth={3}
-                styles={{
-                  root: {
-                    width: '100%',
-                    height: '100%',
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    color: 'white',
-                  },
-                  path: {
-                    stroke: `rgba(4, 122, 14, ${imageFileUploadProgress / 100})`,
-                  },
-                }}
-              />
-            )
-          }
-          <img 
-            src={imageFileUrl || currentUser.profilePicture} 
-            alt="user" 
-            accept='image/*'
-            className={`${imageFileUploadProgress && imageFileUploadProgress < 100 && 'img-opacity'}`}
+        <form onSubmit={handleSubmit}>
+          <input 
+            type="file" 
+            accept='image/*' 
+            onChange={handleImageChange} 
+            id="" 
+            ref={filePickerRef}
+            className='image-change'
           />
-        </div>
-        {
-          imageFileUploadError &&
-          <p className='image-upload-error'>
-            {imageFileUploadError}
-          </p>
-        }
-        <form>
+          <div className="img-box" onClick={() => filePickerRef.current.click()}>
+            {
+              imageFileUploadProgress && (
+                <CircularProgressbar
+                  value={imageFileUploadProgress || 0}
+                  text={`${imageFileUploadProgress}%`}
+                  strokeWidth={3}
+                  styles={{
+                    root: {
+                      width: '100%',
+                      height: '100%',
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      color: 'white',
+                    },
+                    path: {
+                      stroke: `rgba(4, 122, 14, ${imageFileUploadProgress / 100})`,
+                    },
+                  }}
+                />
+              )
+            }
+            <img 
+              src={imageFileUrl || currentUser.profilePicture} 
+              alt="user" 
+              accept='image/*'
+              className={`${imageFileUploadProgress && imageFileUploadProgress < 100 && 'img-opacity'}`}
+            />
+          </div>
+          {
+            imageFileUploadError &&
+            <p className='image-upload-error'>
+              {imageFileUploadError}
+            </p>
+          }
           <input 
             type="text" 
             id='username'
             placeholder='username'
             defaultValue={currentUser.username}
+            onChange={handleChange}
           />
           <input 
             type="email" 
             id="email" 
             placeholder='Email'
             defaultValue={currentUser.email}
+            onChange={handleChange}
           />
           <input 
             type="password" 
             id="password" 
+            onChange={handleChange}
           />
           <button type="submit">Update</button>
         </form>
@@ -134,6 +192,17 @@ const DashboardProfile = () => {
           <p>Delete account</p>
           <p>Sign out</p>
         </div>
+        {updateUserSuccess 
+        && (<p>
+              {updateUserSuccess}
+          </p>)
+        }
+        {
+          updateUserError 
+          && (<p>
+              {updateUserError}
+            </p>)
+        }
       </div>
     </div>
   );
