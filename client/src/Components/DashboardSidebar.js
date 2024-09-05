@@ -1,14 +1,17 @@
 import React from 'react'
 import { FaArrowRight, FaUser } from 'react-icons/fa'
+import { HiDocumentText } from 'react-icons/hi'
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom'
 import { signOutSuccess } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const DashboardSidebar = () => {
   const location = useLocation();
   const [tab, setTab] = useState('');
   const dispatch = useDispatch();
+  const { currentUser } = useSelector(state => state.user);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -46,8 +49,15 @@ const DashboardSidebar = () => {
         <Link to={'/Dashboard?tab=profile'} className={`profile-direct ${tab === 'profile' ? 'active' : ''}`}>
             <FaUser size={25} />
             <p>Profile</p>
-            <span>user</span>
+            <span>{currentUser.isAdmin ? 'Admin' : 'user'}</span>
         </Link>
+        {currentUser.isAdmin && 
+          (
+            <Link to={'/Dashboard?tab=posts'} className={`post-direct ${tab === 'posts' ? 'active' : ''}`}>
+              <HiDocumentText size={25} />
+              Posts
+          </Link>
+          )}
         <div className="sign-out" onClick={() => handleSignOut()}>
             <FaArrowRight size={20}/>
             <p>Sign out</p>
