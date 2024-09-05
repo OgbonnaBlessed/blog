@@ -655,8 +655,7 @@ button:disabled {
   align-items: center;
   flex-direction: column;
   gap: 2rem;
-  min-width: 600px;
-  max-width: 90%;
+  width: 600px;
   margin-top: 5rem;
 }
 
@@ -683,6 +682,7 @@ button:disabled {
   width: 23rem;
   padding: 0 10px;
   font-size: 1rem;
+  background-color: rgb(223, 223, 223);
 }
 
 .select .select-box {
@@ -753,6 +753,7 @@ form .file {
   align-items: center;
   box-shadow: 0 0 .2rem var(--secondary-color);
   border-radius: 50px;
+  background-color: rgb(223, 223, 223);
 }
 
 .file button {
