@@ -42,7 +42,7 @@ const DashboardProfile = () => {
         setImageFileUrl(URL.createObjectURL(file));
       } else {
         // File is not an image
-        setImageFileUploadError('Only image files are allowed.');
+        setImageFileUploadError('Only image files are allowed');
         setImageFile(null); // Clear the image file state
         setImageFileUrl(currentUser.profilePicture); // Retain the initial image
       }
