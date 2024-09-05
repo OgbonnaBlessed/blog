@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { app } from '../firebase';
+import { useNavigate } from 'react-router-dom'
 
 const CreatePost = () => {
     const [open, setOpen] = useState(false);
@@ -11,6 +12,8 @@ const CreatePost = () => {
     const [imageUploadProgress, setImageUploadProgress] = useState(null);
     const [imageUploadError, setImageUploadEror] = useState(null);
     const [formData, setFormData] = useState({});
+    const [publishError, setPublishError] = useState(null);
+    const navigate = useNavigate();
 
     const handleFileUpload = (e) => {
       const file = e.target.files[0];
@@ -68,6 +71,7 @@ const CreatePost = () => {
     const selectCategory = (category) => {
         setSelectedCategory(category);
         setOpen(false);
+        setFormData({ ...formData, category: category })
     }
 
     const selectRef = useRef();
@@ -90,6 +94,32 @@ const CreatePost = () => {
         };
     });
 
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+
+      try {
+        const res = await fetch('/api/post/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          setPublishError(data.message);
+          return;
+        } else {
+          setPublishError(null);
+          navigate(`/post/${data.slug}`);
+        }
+
+      } catch (error) {
+        setPublishError('Something went wrong');
+      }
+    }
+
     const spinnerStyle = {
       border: '2px solid rgba(0, 0, 0, 0.1)',
       width: '20px',
@@ -103,11 +133,23 @@ const CreatePost = () => {
     <div className='create-container'>
       <div className="create-box">
         <h1>Create a Post</h1>
-        <form>
+        <form onSubmit={handleSubmit}>
            <div className="select">
-                <input type="text" placeholder='Title' required />
-                <div className='select-box' ref={selectRef}>
-                    <button type="button" onClick={togleOpen}>{selectedCategory}</button>
+                <input 
+                  type="text" 
+                  placeholder='Title' 
+                  required 
+                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                />
+                <div 
+                  className='select-box' 
+                  ref={selectRef}
+                >
+                    <button 
+                      type="button" 
+                      onClick={togleOpen}
+                    >{selectedCategory}
+                  </button>
                     <ul className={`select-drop-down ${open ? 'active' : 'inactive'}`}>
                         <li onClick={() => selectCategory('React')}>React</li>
                         <li onClick={() => selectCategory('Tailwind')}>Tailwind</li>
@@ -140,7 +182,6 @@ const CreatePost = () => {
               ) : 'Upload image'}
             </button>
            </div>
-           {/* <div className="box"></div> */}
            {
               imageUploadError &&
               <p>{imageUploadError}</p>
@@ -158,8 +199,13 @@ const CreatePost = () => {
                 placeholder='What would you love to post?'
                 className='react-quill'
                 required
+                onChange={(value) => {setFormData({ ...formData, content: value })}}
             />
             <button type="submit" className='publish-button'>Publish</button>
+            {
+              publishError &&
+              <p>{publishError}</p>
+            }
         </form>
       </div>
     </div>
