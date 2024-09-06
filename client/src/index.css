@@ -672,6 +672,10 @@ button:disabled {
   background: transparent;
 }
 
+.modal-text {
+  text-align: center;
+}
+
 .create-container {
   width: 100%;
   min-height: 100vh;

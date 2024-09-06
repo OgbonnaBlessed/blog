@@ -131,7 +131,7 @@ const DashboardProfile = () => {
     }
   }
 
-  const handleDeleteUser = async () => {
+ const handleDeleteUser = async () => {
     setShowModal(false);
 
     try {
@@ -149,7 +149,7 @@ const DashboardProfile = () => {
     } catch (error) {
       dispatch(deleteUserFailure(error.message))
     }
-  }
+  } 
 
   const handleSignOut = async () => {
     try {
