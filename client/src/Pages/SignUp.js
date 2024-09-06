@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 
 // CSS for the spinner
 const spinnerStyle = {
-  border: '4px solid rgba(0, 0, 0, 0.1)',
+  border: '2px solid rgba(0, 0, 0, 0.1)',
   width: '20px',
   height: '20px',
   borderRadius: '50%',

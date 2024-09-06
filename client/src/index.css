@@ -467,6 +467,7 @@ button:disabled {
   width: 100%;
   align-items: flex-end;
   position: relative;
+  transition: all .5s ease-in-out;
 }
 
 .profile-direct.active {
@@ -492,6 +493,7 @@ button:disabled {
   cursor: pointer;
   width: 100%;
   align-items: flex-end;
+  transition: all .5s ease-in-out;
 }
 
 .post-direct.active {
@@ -503,7 +505,17 @@ button:disabled {
   font-size: 1.2rem;
   align-items: center;
   gap: 1rem;
+  cursor: pointer;
+  box-shadow: inset 0 0 .3rem var(--secondary-color);
+  border-radius: 10px;
   padding: 1rem;
+  transition: all .5s ease-in-out;
+}
+
+.profile-direct:hover,
+.post-direct:hover,
+.side-bar-content .sign-out:hover {
+  background-color: var(--secondary-color);
 }
 
 .profile {
@@ -834,4 +846,52 @@ form .publish-button {
 .form-data-image {
   width: 100%;
   height: 20rem;
+}
+
+.dashboard-posts-list {
+  width: 82%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* margin: auto; */
+}
+
+.dashboard-posts-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 6rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse; /* Ensures borders are merged */
+  padding: 0 1rem;
+}
+
+thead th {
+  padding: 1rem;
+  text-align: left; 
+  border-bottom: 2px solid var(--secondary-color); /* Add bottom border to header */
+}
+
+tbody td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--secondary-color); /* Add border between rows */
+}
+
+table tbody tr td a img {
+  width: 10rem;
+  height: 5rem;
+  border-radius: 5px;
+}
+
+td .admin-edit-post {
+  color: var(--secondary-color);
+}
+
+td .admin-delete-post {
+  cursor: pointer;
 }
