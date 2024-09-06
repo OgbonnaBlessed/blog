@@ -907,3 +907,9 @@ td .admin-delete-post {
   font-size: 1.2rem;
   cursor: pointer;
 }
+
+.dash-board-user-image {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+}

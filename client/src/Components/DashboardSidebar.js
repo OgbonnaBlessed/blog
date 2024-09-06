@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaArrowRight, FaUser } from 'react-icons/fa'
+import { FaArrowRight, FaUser, FaUsers } from 'react-icons/fa'
 import { HiDocumentText } from 'react-icons/hi'
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom'
@@ -52,11 +52,16 @@ const DashboardSidebar = () => {
             <span>{currentUser.isAdmin ? 'Admin' : 'user'}</span>
         </Link>
         {currentUser.isAdmin && 
-          (
+          (<>
             <Link to={'/Dashboard?tab=posts'} className={`post-direct ${tab === 'posts' ? 'active' : ''}`}>
               <HiDocumentText size={25} />
               Posts
-          </Link>
+            </Link>
+            <Link to={'/Dashboard?tab=users'} className={`post-direct ${tab === 'users' ? 'active' : ''}`}>
+              <FaUsers size={25}/>
+              Users
+            </Link>
+          </>
           )}
         <div className="sign-out" onClick={() => handleSignOut()}>
             <FaArrowRight size={20}/>
