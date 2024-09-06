@@ -85,7 +85,7 @@ const Header = () => {
                         <div className={`user-info-drop-down ${userInfo ? 'active' : 'inactive'}`}>
                             <div className="user-name">{currentUser.username}</div>
                             <div className="email">{currentUser.email}</div>
-                            <Link to="/Dashboard?tab=profile">Profile</Link>
+                            <Link onClick={() => setUserInfo(!userInfo)} to="/Dashboard?tab=profile">Profile</Link>
                             <button type='button' onClick={() => handleSignOut()}>Sign out</button>
                         </div>
                        

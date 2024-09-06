@@ -138,7 +138,6 @@ const CreatePost = () => {
                 <input 
                   type="text" 
                   placeholder='Title' 
-                  required 
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 />
                 <div 
@@ -198,7 +197,6 @@ const CreatePost = () => {
                 theme='snow' 
                 placeholder='What would you love to post?'
                 className='react-quill'
-                required
                 onChange={(value) => {setFormData({ ...formData, content: value })}}
             />
             <button type="submit" className='publish-button'>Publish</button>

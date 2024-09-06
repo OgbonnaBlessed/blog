@@ -435,7 +435,7 @@ button:disabled {
   display: flex;
   flex-direction: column;
   border-right: 2px solid var(--secondary-color);
-  height: 100vh;
+  min-height: 100vh;
   /* background: var(--main-color); */
 }
 
@@ -854,15 +854,15 @@ form .publish-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* margin: auto; */
 }
 
 .dashboard-posts-container {
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 6rem;
+  margin-top: 7rem;
 }
 
 table {
@@ -893,5 +893,13 @@ td .admin-edit-post {
 }
 
 td .admin-delete-post {
+  cursor: pointer;
+}
+
+.see-more {
+  text-align: center;
+  padding: 2rem 0;
+  color: var(--secondary-color);
+  font-size: 1.2rem;
   cursor: pointer;
 }

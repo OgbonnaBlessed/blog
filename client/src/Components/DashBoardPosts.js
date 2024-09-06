@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const DashBoardPosts = () => {
     const { currentUser } = useSelector((state) => state.user);
     const [userPosts, setUserPosts] = useState([]);
-    console.log(userPosts);
+    const [showMore, setShowMore] = useState(true);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -15,6 +15,9 @@ const DashBoardPosts = () => {
 
                 if (res.ok) {
                     setUserPosts(data.posts);
+                    if (data.posts.length < 9) {
+                        setShowMore(false);
+                    }
                 }
 
             } catch (error) {
@@ -26,11 +29,30 @@ const DashBoardPosts = () => {
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUser._id]);
+
+    const handleShowMore = async () => {
+        const startIndex = userPosts.length;
+
+        try {
+            const res = await fetch(`/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`);
+            const data = await res.json();
+
+            if (res.ok) {
+                setUserPosts((prev) => [...prev, ...data.posts]);
+                if (data.posts.length < 9) {
+                    setShowMore(false);
+                }
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
   return (
     <div className='dashboard-posts-list'>
         <div className="dashboard-posts-container">
             {currentUser.isAdmin && userPosts.length > 0 ?
-            (<table>
+            (<>
+            <table>
                 <thead>
                     <tr>
                         <th>Date updated</th>
@@ -67,8 +89,14 @@ const DashBoardPosts = () => {
                         </tr>
                     </tbody>
                 ))}
-            </table>)
-            : (<p>You have no post yet</p>)
+            </table>
+            {
+                showMore && (
+                    <p onClick={handleShowMore} className='see-more'>see more</p>
+                )
+            }
+            </>
+            ) : (<p>You have no post yet</p>)
             }
         </div>
     </div>
