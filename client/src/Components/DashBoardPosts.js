@@ -90,8 +90,8 @@ const DashBoardPosts = () => {
                         <th><span>Edit</span></th>
                     </tr>
                 </thead>
-                {userPosts.map((post) => (
-                    <tbody key={post.id}>
+                {userPosts.map((post, i) => (
+                    <tbody key={i}>
                         <tr>
                             <td>{new Date(post.updatedAt).toLocaleDateString()}</td>
                             <td>
