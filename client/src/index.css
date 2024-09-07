@@ -928,6 +928,7 @@ td .admin-delete-post {
   align-items: center;
   flex-direction: column;
   padding-top: 6rem;
+  padding-bottom: 4rem;
 }
 
 .post-item-box {
@@ -937,7 +938,7 @@ td .admin-delete-post {
   gap: 1rem;
   align-items: center;
   justify-content: center;
-  padding-bottom: 4rem;
+  padding-bottom: 1rem;
 }
 
 .post-item-box button {
@@ -969,5 +970,80 @@ td .admin-delete-post {
   width: 100%;
   max-height: 30rem;
   overflow: auto;
-  padding-bottom: 2rem;
+}
+
+.comment-section {
+  width: 80%;
+  font-size: 1.2rem;
+}
+
+.signed-in-user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.signed-in-user-info {
+  display: flex;
+  gap: .5rem;
+  align-items: center;
+}
+
+.signed-in-user-info img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+
+.not-signed-in {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.2rem;
+  padding: 1rem 0;
+}
+
+.not-signed-in a {
+  color: var(--secondary-color);
+}
+
+.comment-section form {
+  border-radius: 10px;
+  box-shadow: 0 0 .3rem var(--secondary-color);
+  padding: .8rem;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.comment-section form textarea {
+  width: 300px;
+  border-radius: 10px;
+  background-color: rgb(223, 223, 223);
+  padding: .5rem;
+  font-size: 1rem;
+  outline: none;
+}
+
+.comment-section form .form-box {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-box button {
+  border: 1px dotted var(--secondary-color);
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  padding: 10px 15px;
+  font-size: 1rem;
+  background: transparent;
+}
+
+.form-box p {
+  font-size: .9rem;
 }

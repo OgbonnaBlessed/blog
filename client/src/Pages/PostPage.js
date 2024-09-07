@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import CommentSection from '../Components/CommentSection';
 
 const PostPage = () => {
     const { postSlug } = useParams();
@@ -67,6 +68,7 @@ const PostPage = () => {
 
             </div>
         </div>
+        <CommentSection postId={post._id}/>
     </div>
   )
 }
