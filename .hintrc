@@ -15,7 +15,8 @@
       "default",
       {
         "ignore": [
-          "backdrop-filter"
+          "backdrop-filter",
+          "width: fit-content"
         ]
       }
     ]

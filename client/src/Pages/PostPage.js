@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import CommentSection from '../Components/CommentSection';
+import Author from '../Components/Author';
 
 const PostPage = () => {
     const { postSlug } = useParams();
@@ -56,9 +57,12 @@ const PostPage = () => {
     <div className='post-page'>
         <div className="post-item-box">
             <h1>{post && post.title}</h1>
-            <Link to={`/search?category=${post && post.category}`}>
-                <button type="button">{post && post.category}</button>
-            </Link>
+            <div  className='category-author'>
+                <Link to={`/search?category=${post && post.category}`}>
+                    <button type="button">{post && post.category}</button>
+                </Link>
+                <Author post={post}/>
+            </div>
             <img src={post.image} alt="" />
             <div className="post-sub-info">
                 <p>{post && new Date(post.createdAt).toLocaleDateString()}</p>

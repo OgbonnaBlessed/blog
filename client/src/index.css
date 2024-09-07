@@ -957,6 +957,12 @@ td .admin-delete-post {
   border-radius: 10px;
 }
 
+.category-author {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
 .post-item-box .post-sub-info {
   display: flex;
   align-items: center;
@@ -1009,8 +1015,9 @@ td .admin-delete-post {
 }
 
 .comment-section form {
-  border-radius: 10px;
-  box-shadow: 0 0 .3rem var(--secondary-color);
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border: 1px solid var(--secondary-color);
   padding: .8rem;
   width: fit-content;
   display: flex;
@@ -1020,11 +1027,15 @@ td .admin-delete-post {
 
 .comment-section form textarea {
   width: 300px;
-  border-radius: 10px;
-  background-color: rgb(223, 223, 223);
-  padding: .5rem;
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background: var(--bg-color);
+  border: none;
+  padding: .8rem;
   font-size: 1rem;
   outline: none;
+  color: black;
+  resize: none;
 }
 
 .comment-section form .form-box {
@@ -1035,8 +1046,8 @@ td .admin-delete-post {
 }
 
 .form-box button {
-  border: 1px dotted var(--secondary-color);
-  border-radius: 5px;
+  border: 1px solid var(--secondary-color);
+  border-radius: 20px;
   cursor: pointer;
   color: white;
   padding: 10px 15px;
@@ -1046,4 +1057,85 @@ td .admin-delete-post {
 
 .form-box p {
   font-size: .9rem;
+}
+
+.comment-item {
+  display: flex;
+  align-items: left;
+  gap: 1rem;
+  flex-direction: column;
+  border-bottom: 1px solid var(--secondary-color);
+  width: 500px;
+  padding: 10px 0;
+}
+
+.comment-item .comment-user-info {
+  display: flex;
+  gap: .5rem;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.comment-item .user-name span {
+  font-size: .8rem;
+  color: rgb(170, 231, 29);
+}
+
+.comment-item img {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+
+.comment-display {
+  padding-top: 2rem;
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  gap: 2rem;
+}
+
+.comment-total-box {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.comment-total-number {
+  border-radius: 5px;
+  border: 1px solid var(--secondary-color);
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comment-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: 3.5rem;
+}
+
+.comment-content .actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .9rem;
+}
+
+.actions .thumb {
+  font-size: .9rem;
+  cursor: pointer;
+  transform: scaleX(-1);
+  align-self: center;
+}
+
+.Author {
+  border: 1px solid rgb(255, 72, 0);
+  border-radius: 20px;
+  padding: 10px 15px;
+  cursor: pointer;
 }
