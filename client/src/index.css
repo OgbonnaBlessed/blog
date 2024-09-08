@@ -648,7 +648,7 @@ button:disabled {
   gap: 2rem;
   padding: 1.5rem 2rem;
   font-size: 1.2rem;
-  transition: all .5s ease-in-out;
+  transition: all .5s ease;
 }
 
 .close-modal {
@@ -1036,6 +1036,7 @@ td .admin-delete-post {
   outline: none;
   color: black;
   resize: none;
+  color: white;
 }
 
 .comment-section form .form-box {
@@ -1130,13 +1131,22 @@ td .admin-delete-post {
   cursor: pointer;
 }
 
+.actions .delete-comment {
+  transition: all .1s linear;
+  cursor: pointer;
+}
+
+.actions .delete-comment:hover {
+  color: rgb(243, 57, 57);
+}
+
 .actions .thumb {
   font-size: .9rem;
   cursor: pointer;
   transform: scaleX(-1);
   align-self: center;
   color: rgb(201, 201, 201);
-  transition:  all .5s linear;
+  transition:  all .1s linear;
 }
 
 .actions .thumb:hover {

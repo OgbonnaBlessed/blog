@@ -3,7 +3,7 @@ import moment from 'moment'
 import { FaThumbsUp } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
 
-const Comment = ({comment, onLike, onEdit}) => {
+const Comment = ({comment, onLike, onEdit, onDelete}) => {
     const [user, setUser] = useState({});
     const [isEditing, setIsEditing] = useState(false);
     const [editedContent, setEditedContent] = useState(comment.content);
@@ -89,9 +89,16 @@ const Comment = ({comment, onLike, onEdit}) => {
                         comment.numberOfLikes + '  ' + (comment.numberOfLikes === 1 ? 'like' : 'likes')}
                     </p>
                     {currentUser && (currentUser._id === comment.userId || currentUser.isAdmin) && (
-                        <p onClick={handleEdit} className='edit-comment'>Edit</p>
+                        <>
+                            <p onClick={handleEdit} className='edit-comment'>Edit</p>
+                            <p 
+                                onClick={() => onDelete(comment._id)}
+                                className='delete-comment'
+                                >
+                                        Delete
+                                </p>
+                        </>
                     )}
-                    <p>Delete</p>
                 </div>
             </div>
         )}

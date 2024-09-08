@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom';
 import Comment from './Comment';
+import { motion, AnimatePresence } from 'framer-motion'
+import { FaTimes } from 'react-icons/fa';
 
 const CommentSection = ({postId}) => {
     const { currentUser } = useSelector((state) => state.user);
     const [comment, setComment] = useState('');
     const [commentError, setCommentError] = useState(null)
     const [comments, setComments] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [commentToDelete, setCommentToDelete] = useState(null);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -83,6 +87,27 @@ const CommentSection = ({postId}) => {
         setComments(comments.map((c) => c._id === comment._id ? { ...c, content: editedContent } : c));
     }
 
+    const handleDeleteComment = async (commentId) => {
+        setShowModal(false);
+        try {
+            if (!currentUser) {
+                navigate('/signin');
+                return;
+            }
+            const res = await fetch(`/api/comment/deletecomment/${commentId}`, {
+                method: 'DELETE',
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                setComments(comments.filter((comment) => comment._id !== commentId));
+            }
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
   return (
     <div className='comment-section'>
       {currentUser 
@@ -142,9 +167,54 @@ const CommentSection = ({postId}) => {
                             comment={comment}
                             onLike={handleCommentLike}
                             onEdit={handleEdit}
+                            onDelete={(commentId) => {
+                                setShowModal(true);
+                                setCommentToDelete(commentId)
+                            }}
                         />
                     ))}
                 </div>
+        <AnimatePresence>
+          {showModal &&
+            <motion.div 
+            initial={{
+              opacity: 0
+            }}
+            animate={{
+              opacity: 1
+            }}
+            exit={{
+              opacity: 0
+            }}
+            className="modal-container"
+          >
+            <motion.div 
+              initial={{
+                translateY: -400,
+                opacity: 0
+              }}
+              animate={{
+                translateY: 0,
+                opacity: 1
+              }}
+              exit={{
+                opacity: 0,
+                translateY: -400
+              }}
+              className="modal-box">
+              <FaTimes 
+                className='close-modal'
+                onClick={() => setShowModal(false)}
+              />
+              <p className='modal-text'>Are you sure you want to delete this comment?</p>
+              <motion.div className="actions">
+                <button type="button" onClick={() => handleDeleteComment(commentToDelete)}>Delete</button>
+                <button type="button" onClick={() => setShowModal(false)}>Cancel</button>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+          }
+        </AnimatePresence>
         </>
         )}
      </div>
