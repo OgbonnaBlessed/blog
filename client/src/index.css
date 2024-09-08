@@ -1126,6 +1126,10 @@ td .admin-delete-post {
   font-size: .9rem;
 }
 
+.actions .edit-comment {
+  cursor: pointer;
+}
+
 .actions .thumb {
   font-size: .9rem;
   cursor: pointer;
@@ -1148,4 +1152,46 @@ td .admin-delete-post {
   border-radius: 20px;
   padding: 10px 15px;
   cursor: pointer;
+}
+
+.edit-comment-content {
+  display: flex;
+  position: relative;
+}
+
+.edit-comment-content textarea {
+  border: 0;
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  width: 100%;
+  height: 5rem;
+  overflow-y: auto;
+  resize: none;
+  padding: .8rem;
+  background: var(--bg-color);
+  color: white;
+  outline: none;
+}
+
+.edit-comment-content textarea ::-webkit-scrollbar {
+  width: none;
+}
+
+.edit-comment-content .comment-content-edit-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: end;
+}
+
+.comment-content-edit-actions button {
+  align-self: right;
+  color: white;
+  border-radius: 20px;
+  border: 0;
+  outline: 0;
+  background: var(--secondary-color);
+  cursor: pointer;
+  padding: 10px 15px;
+  font-size: 1rem;
 }
