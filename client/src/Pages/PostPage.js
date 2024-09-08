@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import CommentSection from '../Components/CommentSection';
 import Author from '../Components/Author';
+import PostCard from '../Components/PostCard';
 
 const PostPage = () => {
     const { postSlug } = useParams();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [post, setPost] = useState(null);
+    const [recentPosts, setRecentPosts] = useState(null);
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -37,6 +39,23 @@ const PostPage = () => {
 
         fetchPost();
     },[postSlug]);
+
+    useEffect(() => {
+        try {
+            const fetchRecentPosts = async () => {
+                const res = await fetch(`/api/post/getposts?limit=5`);
+                const data = await res.json();
+
+                if (res.ok) {
+                    setRecentPosts(data.posts);
+                }
+            }
+            fetchRecentPosts();
+            
+        } catch (error) {
+            console.log(error);
+        }
+    })
 
     const spinnerStyle = {
         border: '4px solid rgba(0, 0, 0, 0.1)',
@@ -73,6 +92,15 @@ const PostPage = () => {
             </div>
         </div>
         <CommentSection postId={post._id}/>
+        <div className='recent-articles-container'>
+            <h1>Recent Articles</h1>
+            <div className="recent-articles-box">
+                {recentPosts && 
+                recentPosts.map((post) => 
+                    <PostCard key={post._id} post={post} />
+                )}
+            </div>
+        </div>
     </div>
   )
 }
