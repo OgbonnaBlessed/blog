@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import { FaThumbsUp } from 'react-icons/fa'
+import { useSelector } from 'react-redux'
 
-const Comment = ({comment}) => {
+const Comment = ({comment, onLike}) => {
     const [user, setUser] = useState({});
+    const { currentUser } = useSelector((state) => state.user);
     
     useEffect(() => {
         const getUser = async () => {
@@ -30,9 +32,14 @@ const Comment = ({comment}) => {
         <div className="comment-content">
             <div>{comment.content}</div>
             <div className="actions">
-                <FaThumbsUp className='thumb'/>
-                <p>1</p>
-                <p>likes</p>
+                <FaThumbsUp 
+                    className={`thumb ${currentUser && comment.likes.includes(currentUser._id) && 'thumb-blue'}`} 
+                    onClick={() => { onLike(comment._id)}}
+                     />
+                <p>
+                    {comment.numberOfLikes > 0 &&
+                    comment.numberOfLikes + '  ' + (comment.numberOfLikes === 1 ? 'like' : 'likes')}
+                </p>
                 <p>Edit</p>
                 <p>Delete</p>
             </div>

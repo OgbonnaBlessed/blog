@@ -1131,6 +1131,16 @@ td .admin-delete-post {
   cursor: pointer;
   transform: scaleX(-1);
   align-self: center;
+  color: rgb(201, 201, 201);
+  transition:  all .5s linear;
+}
+
+.actions .thumb:hover {
+  color: rgb(38, 38, 245);
+}
+
+.actions .thumb-blue {
+  color: rgb(38, 38, 245);
 }
 
 .Author {

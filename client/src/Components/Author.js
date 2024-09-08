@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 
 const Author = ({post}) => {
     const [user, setUser] = useState({});
-    console.log(user);
     
     useEffect(() => {
         const getUser = async () => {
