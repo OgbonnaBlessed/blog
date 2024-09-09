@@ -55,8 +55,8 @@ const Comment = ({comment, onLike, onEdit, onDelete}) => {
   return (
     <div className='comment-item'>
         <div className="comment-user-info">
-            <img src={user.profilePicture} alt="" />
-            <p className='user-name'>@{user.username} <span>{moment(comment.createdAt).fromNow()}</span></p>
+                <img src={(user.profilePicture) || 'https://cdn-icons-png.flaticon.com/128/149/149071.png'} alt="" />
+                <p className='user-name'>@{user.username || 'Anonymous'} <span>{moment(comment.createdAt).fromNow()}</span></p>
         </div>
         {isEditing 
         ? (

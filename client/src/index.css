@@ -1228,3 +1228,129 @@ td .admin-delete-post {
 .post-card-item a img {
   width: 15rem;
 }
+
+.collection-container {
+  width: 82%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 0 1rem;
+  padding-top: 7rem;
+  padding-bottom: 3rem;
+}
+
+.collection-summary {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.collection-summary .summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 1rem;
+  box-shadow: 0 0 .5rem var(--secondary-color);
+  padding: 10px;
+  width: 20rem;
+  height: 10rem;
+}
+
+.summary .total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-text {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.total-text .head-text {
+  font-size: 1.2rem;
+}
+
+.summary-icon {
+  background: var(--secondary-color);
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 3rem;
+}
+
+.increased {
+  display: flex;
+  gap: .4rem;
+  align-items: flex-end;
+}
+
+.increased .icon-box {
+  display: flex;
+  gap: 2px;
+  align-items: flex-end;
+}
+
+.collection-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.users-info {
+  box-shadow: 0 0 .5rem var(--secondary-color);
+  min-width: 400px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 30rem;
+}
+
+.users-info table {
+  height: 100%;
+}
+
+.users-info .top-box-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.2rem;
+}
+
+.top-box-info button {
+  background: var(--secondary-color);
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  padding: 8px 12px;
+  font-size: .9rem;
+  border: 0;
+  outline: 0;
+}
+
+.users-info tbody td {
+  border-bottom: none;
+}
+
+.user-info thead th {
+  border-bottom: none;
+}
+
+.users-info img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
+.posts-info {
+  align-self: center;
+}
+
+.posts-info img {
+  width: 8rem;
+  height: 4rem;
+  border-radius: 8px;
+}

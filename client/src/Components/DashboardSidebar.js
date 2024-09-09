@@ -1,11 +1,12 @@
 import React from 'react'
-import { FaArrowRight, FaUser, FaUsers } from 'react-icons/fa'
+import { FaComments, FaUser, FaUsers } from 'react-icons/fa'
 import { HiDocumentText } from 'react-icons/hi'
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom'
 import { signOutSuccess } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { MdLogout, MdDashboard } from 'react-icons/md'
 
 const DashboardSidebar = () => {
   const location = useLocation();
@@ -46,6 +47,13 @@ const DashboardSidebar = () => {
         Blog
       </div>
       <div className="side-bar-content">
+        {currentUser.isAdmin && 
+        (
+          <Link to={'/Dashboard?tab=collection'} className={`post-direct ${tab === 'collection' ? 'active' : ''}`}>
+              <MdDashboard size={25} />
+              Dashboard
+          </Link>
+        )}
         <Link to={'/Dashboard?tab=profile'} className={`profile-direct ${tab === 'profile' ? 'active' : ''}`}>
             <FaUser size={25} />
             <p>Profile</p>
@@ -61,10 +69,14 @@ const DashboardSidebar = () => {
               <FaUsers size={25}/>
               Users
             </Link>
+            <Link to={'/Dashboard?tab=comments'} className={`post-direct ${tab === 'comments' ? 'active' : ''}`}>
+              <FaComments size={25}/>
+              Comments
+            </Link>
           </>
           )}
         <div className="sign-out" onClick={() => handleSignOut()}>
-            <FaArrowRight size={20}/>
+            <MdLogout size={20}/>
             <p>Sign out</p>
         </div>
       </div>
