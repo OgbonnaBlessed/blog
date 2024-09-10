@@ -86,6 +86,12 @@ const Header = () => {
                             <div className="user-name">{currentUser.username}</div>
                             <div className="email">{currentUser.email}</div>
                             <Link onClick={() => setUserInfo(!userInfo)} to="/Dashboard?tab=profile">Profile</Link>
+                            {currentUser.isAdmin
+                            && (
+                                <Link onClick={() => setUserInfo(!userInfo)} to="/Dashboard?tab=collection">
+                                    Dashboard
+                                </Link>
+                            )}
                             <button type='button' onClick={() => handleSignOut()}>Sign out</button>
                         </div>
                        
