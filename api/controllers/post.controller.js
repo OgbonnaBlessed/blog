@@ -44,8 +44,8 @@ export const getposts = async (req, res, next) => {
             ...(req.query.postId && { _id: req.query.postId }),
             ...(req.query.searchTerm && {
                 $or: [
-                    { title: { $regex: req.query.searchTerm, options: 'i' } },
-                    { content: { $regex: req.query.searchTerm, options: 'i' } },
+                    { title: { $regex: req.query.searchTerm, $options: 'i' } },
+                    { content: { $regex: req.query.searchTerm, $options: 'i' } },
                 ],
             }),
     }).sort({ updatedAt: sortDirection }).skip(startIndex).limit(limit);
@@ -110,3 +110,21 @@ export const updatepost = async (req, res, next) => {
         next(error);
     }
 }
+
+export const getRelatedPosts = async (req, res, next) => {
+    const { category, slug } = req.query;
+
+    try {
+        const relatedPosts = await Post.find({
+            category: category,
+            slug: { $ne: slug }, // Exclude the current post by slug
+        }).limit(5); // Limit to 4 related posts or however you want to display
+
+        res.status(200).json({
+            posts: relatedPosts
+        });
+
+    } catch (error) {
+        next(error);
+    }
+};

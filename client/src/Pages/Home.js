@@ -2,9 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FaAngleLeft, FaAngleRight, FaCheck } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Author from '../Components/Author';
+import { motion } from 'framer-motion';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const featureBoxRef = useRef(null); // Ref for the container
   const [showLeft, setShowLeft] = useState(false); // Control left arrow visibility
@@ -47,8 +49,16 @@ const Home = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
+      setLoading(true);
       const res = await fetch('/api/post/getPosts');
       const data = await res.json();
+
+      if (!res.ok) {
+        setLoading(false);
+        return;
+      }
+
+     setLoading(false);
       setPosts(data.posts);
     };
     fetchPosts();
@@ -62,9 +72,56 @@ const Home = () => {
     return content;
   }
 
+  // Function to truncate post content to 8 characters max
+  const truncateTitle = (content, maxLength = 8) => {
+    if (content.length > maxLength) {
+      return content.slice(0, maxLength) + '...';
+    }
+    return content;
+  }
+
+  // Function to truncate post content to 20 characters max
+  const truncateTitleItem = (content, maxLength = 20) => {
+    if (content.length > maxLength) {
+      return content.slice(0, maxLength) + '...';
+    }
+    return content;
+  }
+  
+  
+
+  const spinnerStyle = {
+    border: '4px solid rgba(0, 0, 0, 0.1)',
+    width: '80px',
+    height: '80px',
+    borderRadius: '50%',
+    borderTopColor: '#444444',
+    animation: 'spin 1s ease-in-out infinite',
+  };
+
+  if (loading)
+    return (
+      <div className='spinner-container'>
+        <div style={spinnerStyle}></div>
+      </div>
+    );
+
   return (
     <div className="Home-page">
-      <div className="featured-posts-container">
+      <motion.div 
+      initial={{
+        opacity: 0,
+        translateY: -200,
+      }}
+      animate={{
+        opacity: 1,
+        translateY: 0
+      }}
+      exit={{
+        opacity: 0,
+        translateY: -200
+      }}
+      className="featured-posts-container">
         {showLeft && (
           <FaAngleLeft
             id="prev_slide"
@@ -78,8 +135,8 @@ const Home = () => {
             {posts.map((post) => (
               <Link to={`/post/${post.slug}`} key={post._id}>
                 <div className="featured-posts">
-                  <img src={post.image} alt={post.title} />
-                  <p>{post.title}</p>
+                  <img src={post.image} loading='lazy' alt={post.title} />
+                  <p>{truncateTitle(post.title)}</p>
                 </div>
               </Link>
             ))}
@@ -93,8 +150,97 @@ const Home = () => {
             onClick={() => scroll(1)}
           />
         )}
-      </div>
-      <div className="Home-page-body">
+      </motion.div>
+      <motion.div
+        initial={{
+          opacity: 0,
+          translateY: 200,
+        }}
+        animate={{
+          opacity: 1,
+          translateY: 0
+        }}
+        exit={{
+          opacity: 0,
+          translateY: 200
+        }}
+       className="Home-page-body-intro">
+        <div className="intro-content">
+          <motion.h2
+          initial={{
+            opacity: 0,
+            translateY: -50,
+          }}
+          animate={{
+            opacity: 1,
+            translateY: 0
+          }}
+          exit={{
+            opacity: 0,
+            translateY: -50,
+          }}
+          >Welcome to a Journey of Faith, Hope, and Grace</motion.h2>
+          <motion.div 
+            initial={{
+              opacity: 0,
+              translateX: -200,
+            }}
+            animate={{
+              opacity: 1,
+              translateX: 0
+            }}
+            exit={{
+              opacity: 0,
+              translateX: -200
+            }}
+          className="intro-main-content">
+            <p>
+            In a world filled with uncertainty, Christ is our constant. We invite you to embark on a journey of transformation, where hearts are healed, burdens are lifted, and souls are restored. Jesus stands at the door of your heart, gently knocking, not with condemnation, but with love, grace, and acceptance. "Come to me, all you who are weary and burdened, and I will give you rest" (Matthew 11:28).
+            </p>
+
+            <p>
+            No matter where you've been or what you've faced, Christ offers you a fresh start. His love knows no bounds, and His grace is available to all who seek Him. This is a place where His word comes alive, offering peace in the midst of chaos, joy for mourning, and beauty for ashes. "Therefore, if anyone is in Christ, the new creation has come: The old has gone, the new is here!" (2 Corinthians 5:17).
+            </p>
+
+            <p>
+            You are welcome here. In Christ, there is no rejection, no condemnation—only love, acceptance, and a new beginning.
+            </p>
+            <Link to='/search'>
+              Start your journey now!
+            </Link>
+          </motion.div>
+        </div>
+        <div className="intro-content-image">
+          <motion.img
+          initial={{
+            opacity: 0,
+            translateX: 200,
+          }}
+          animate={{
+            opacity: 1,
+            translateX: 0
+          }}
+          exit={{
+            opacity: 0,
+            translateX: 200
+          }}
+           src={`${process.env.PUBLIC_URL}/images/view1.jpeg`} alt="" />
+        </div>
+      </motion.div>
+      <motion.div
+        initial={{
+          opacity: 0,
+          translateY: 200,
+        }}
+        animate={{
+          opacity: 1,
+          translateY: 0
+        }}
+        exit={{
+          opacity: 0,
+          translateY: 200
+        }}
+         className="Home-page-body">
         <div className="Home-page-main-content">
           {posts.slice(0, 3).map((post, i) => (
             <div className="main-content-item" key={i}>
@@ -104,7 +250,7 @@ const Home = () => {
                   
                 </div>
                 <div className="Author-container">
-                  <p>{post.title}</p>
+                  <p>{truncateTitleItem(post.title)}</p>
                   <div className="Author-box">
                     <Author post={post}/>
                     <FaCheck className='author-icon'/>
@@ -127,7 +273,7 @@ const Home = () => {
             ))}
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaComments, FaUser, FaUsers } from 'react-icons/fa'
+import { FaComments, FaUser, FaUsers, FaUserShield } from 'react-icons/fa'
 import { HiDocumentText } from 'react-icons/hi'
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom'
@@ -44,7 +44,7 @@ const DashboardSidebar = () => {
   return (
     <div className='side-bar'>
       <div className="logo-contain">
-        Blog
+          <FaUserShield className='user-admin-icon'/>
       </div>
       <div className="side-bar-content">
         {currentUser.isAdmin && 

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, useLocation, useNavigate } from 'react-router-dom'
 import { FaMoon, FaSearch, FaUser } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleTheme } from '../redux/theme/themeSlice'
@@ -10,7 +10,21 @@ const Header = () => {
     const { currentUser } = useSelector(state => state.user);
     const { theme } = useSelector(state => state.theme);
     const [userInfo, setUserInfo] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [lastScrollPos, setLastScrollPos] = useState(0); // To track the scroll position
+    const [hideHeader, setHideHeader] = useState(false); // To toggle header visibility
     const dispatch = useDispatch();
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const urlParams = new URLSearchParams(location.search);
+        const searchTermFromUrl = urlParams.get('searchTerm');
+
+        if (searchTermFromUrl) {
+            setSearchTerm(searchTermFromUrl);
+        }
+    }, [location.search])
 
     const profileRef = useRef();
 
@@ -27,6 +41,26 @@ const Header = () => {
             document.removeEventListener('mousedown', closeProfileBox);
         };
     });
+
+    // Scroll detection logic
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollPos = window.pageYOffset;
+            // If scrolling down, hide the header
+            if (currentScrollPos > lastScrollPos) {
+                setHideHeader(true);
+            } else {
+                // If scrolling up, show the header
+                setHideHeader(false);
+            }
+            setLastScrollPos(currentScrollPos);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [lastScrollPos]);
 
     const handleSignOut = async () => {
         try {
@@ -46,22 +80,35 @@ const Header = () => {
         }
     }
 
-  return (
-    <div className='nav-container'>
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const urlParams = new URLSearchParams(location.search);
+        urlParams.set('searchTerm', searchTerm);
+        const searchQuery = urlParams.toString();
+        navigate(`/search?${searchQuery}`);
+    }
+
+    return (
+      <div className={`nav-container ${hideHeader ? 'hide' : ''}`}>
         <div className="nav-box">
             <div className="nav-logo">
-                Blog
+                <p className='This'>This</p>
+                <p className='Jesus'>Jesus</p>
             </div>
-            <div className="search-box">
-                <input type="text" placeholder='Search...' />
-                <div className="search-icon">
+            <form onSubmit={handleSubmit} className="search-box">
+                <input 
+                    type="text" 
+                    placeholder='Search...' 
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}/>
+                <button type='submit' className="search-icon">
                     <FaSearch size={20} className='icon' />
-                </div>
-            </div>
+                </button>
+            </form>
             <div className="nav-links">
                 <NavLink to='/'>Home</NavLink>
                 <NavLink to='/About'>About</NavLink>
-                <NavLink to='/Projects'>Projects</NavLink>
+                <NavLink to='/Contact'>Contact</NavLink>
             </div>
             <div className="background-toggle-box" onClick={() => dispatch(toggleTheme())}>
                 {
@@ -105,8 +152,8 @@ const Header = () => {
     
             }
         </div>
-    </div>
-  )
+      </div>
+    )
 }
 
-export default Header
+export default Header;

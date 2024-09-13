@@ -76,7 +76,20 @@ const DashBoardUsers = () => {
         <div className="dashboard-posts-container">
             {currentUser.isAdmin && users.length > 0 ?
             (<>
-            <table>
+            <motion.table
+             initial={{
+                opacity: 0,
+                translateY: 200,
+              }}
+              animate={{
+                opacity: 1,
+                translateY: 0
+              }}
+              exit={{
+                opacity: 0,
+                translateY: 200
+              }}
+            >
                 <thead>
                     <tr>
                         <th>Date created</th>
@@ -118,7 +131,7 @@ const DashBoardUsers = () => {
                         </tr>
                     </tbody>
                 ))}
-            </table>
+            </motion.table>
             {
                 showMore && (
                     <p onClick={handleShowMore} className='see-more'>see more</p>

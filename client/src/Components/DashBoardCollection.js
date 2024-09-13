@@ -5,6 +5,7 @@ import { FaUsers } from 'react-icons/fa';
 import { HiDocumentText } from 'react-icons/hi';
 import { HiOutlineArrowNarrowUp } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion';
 
 const DashBoardCollection = () => {
     const [users, setUsers] = useState([]);
@@ -75,7 +76,20 @@ const DashBoardCollection = () => {
     }, [currentUser]);
 
   return (
-    <div className='collection-container'>
+    <motion.div 
+     initial={{
+        opacity: 0,
+        translateY: 200,
+      }}
+      animate={{
+        opacity: 1,
+        translateY: 0
+      }}
+      exit={{
+        opacity: 0,
+        translateY: 200
+      }}
+    className='collection-container'>
       <div className="collection-summary">
         <div className="summary">
             <div className="total">
@@ -87,7 +101,7 @@ const DashBoardCollection = () => {
             </div>
             <div className="increased">
                 <div className="icon-box">
-                    <HiOutlineArrowNarrowUp size={20}/>
+                    <HiOutlineArrowNarrowUp className='icrease-icon' size={20}/>
                     <p>{lastMonthUsers}</p>
                 </div>
                 <p>Last month</p>
@@ -208,7 +222,7 @@ const DashBoardCollection = () => {
             ))}
         </table>
       </div>
-    </div>
+    </motion.div>
   )
 }
 

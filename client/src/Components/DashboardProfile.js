@@ -169,6 +169,21 @@ const DashboardProfile = () => {
     }
   }
 
+  useEffect(() => {
+    if (updateUserSuccess || updateUserError || error || imageFileUploadError) {
+      const timer = setTimeout(() => {
+        setUpdateUserSuccess(null);
+        setUpdateUserError(null);
+        setImageFileUploadError(null);
+        // Optionally reset error if you also want it to disappear after 5 seconds
+        // dispatch(updateFailure(null)); 
+      }, 2000); // 3 seconds
+  
+      // Cleanup the timer if the component unmounts or the state changes before 5 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [updateUserSuccess, updateUserError, error, imageFileUploadError]);
+
   const spinnerStyle = {
     border: '2px solid rgba(0, 0, 0, 0.1)',
     width: '20px',
@@ -180,7 +195,20 @@ const DashboardProfile = () => {
 
   return (
     <div className='profile'>
-      <div className="profile-container">
+      <motion.div 
+      initial={{
+        opacity: 0,
+        translateY: 200,
+      }}
+      animate={{
+        opacity: 1,
+        translateY: 0
+      }}
+      exit={{
+        opacity: 0,
+        translateY: 200
+      }}
+      className="profile-container">
         <form onSubmit={handleSubmit}>
           <input 
             type="file" 
@@ -266,23 +294,23 @@ const DashboardProfile = () => {
           <p onClick={() => setShowModal(!showModal)}>Delete account</p>
           <p onClick={() => handleSignOut()}>Sign out</p>
         </div>
-        {updateUserSuccess 
-        && (<p>
-              {updateUserSuccess}
-          </p>)
-        }
-        {
-          updateUserError 
-          && (<p>
-              {updateUserError}
-            </p>)
-        }
-        {
-          error &&
-          (
-            <p>{error}</p>
-          )
-        }
+        <p className="user-message">
+          {updateUserSuccess && 
+            <>
+            {updateUserSuccess}
+            </>
+          }
+          {updateUserError && 
+            <>
+           {updateUserError}
+           </>
+           }
+          {error && 
+            <>
+          {error}
+            </>
+          }
+        </p>
         <AnimatePresence>
           {showModal &&
             <motion.div 
@@ -321,7 +349,7 @@ const DashboardProfile = () => {
           </motion.div>
           }
         </AnimatePresence>
-      </div>
+      </motion.div>
     </div>
   );
 };
