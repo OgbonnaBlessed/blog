@@ -5,11 +5,13 @@ import { useSelector, useDispatch } from 'react-redux'
 import { toggleTheme } from '../redux/theme/themeSlice'
 import { MdSunny } from 'react-icons/md'
 import { signOutSuccess } from '../redux/user/userSlice'
+import { IoChevronDownOutline } from 'react-icons/io5'
 
 const Header = () => {
     const { currentUser } = useSelector(state => state.user);
     const { theme } = useSelector(state => state.theme);
     const [userInfo, setUserInfo] = useState(false);
+    const [sideBar, setSideBar] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [lastScrollPos, setLastScrollPos] = useState(0); // To track the scroll position
     const [hideHeader, setHideHeader] = useState(false); // To toggle header visibility
@@ -27,11 +29,16 @@ const Header = () => {
     }, [location.search])
 
     const profileRef = useRef();
+    const sidebarRef = useRef();
 
     useEffect(() => {
        const closeProfileBox = (event) => {
         if (profileRef.current && !profileRef.current.contains(event.target)) {
             setUserInfo(false);
+        }
+
+        if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+            setSideBar(false);
         }
        };
 
@@ -90,7 +97,7 @@ const Header = () => {
 
     return (
       <div className={`nav-container ${hideHeader ? 'hide' : ''}`}>
-        <div className="nav-box">
+        <div className="nav-box" ref={sidebarRef}>
             <div className="nav-logo">
                 <p className='This'>This</p>
                 <p className='Jesus'>Jesus</p>
@@ -102,55 +109,63 @@ const Header = () => {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}/>
                 <button type='submit' className="search-icon">
-                    <FaSearch size={20} className='icon' />
+                    <FaSearch className='icon' />
                 </button>
             </form>
-            <div className="nav-links">
-                <NavLink to='/'>Home</NavLink>
-                <NavLink to='/About'>About</NavLink>
-                <NavLink to='/Contact'>Contact</NavLink>
-            </div>
-            <div className="background-toggle-box" onClick={() => dispatch(toggleTheme())}>
+            <form onSubmit={handleSubmit} className="search-box-md">
+                <button type='submit' className="search-icon">
+                    <FaSearch className='icon' />
+                </button>
+            </form>
+            <div className={`right-items ${sideBar ? 'active' : 'inactive'}`}>
+                <div className="nav-links">
+                    <NavLink to='/' onClick={() => setSideBar(!sideBar)}>Home</NavLink>
+                    <NavLink to='/About' onClick={() => setSideBar(!sideBar)}>About</NavLink>
+                    <NavLink to='/Contact' onClick={() => setSideBar(!sideBar)}>Contact</NavLink>
+                </div>
+                <div className="background-toggle-box" onClick={() => dispatch(toggleTheme())}>
+                    {
+                        theme === 'light' 
+                        ? (<FaMoon className='toggle-icon' size={18}/>)
+                        : (<MdSunny className='toggle-icon' size={20} />)
+                    }
+                </div>
                 {
-                    theme === 'light' 
-                    ? (<FaMoon className='toggle-icon' size={18}/>)
-                    : (<MdSunny className='toggle-icon' size={20} />)
+                    currentUser 
+                    ? (
+                        <div className="user-info-container" ref={profileRef}>
+                            <div className='user-info' onClick={() => setUserInfo(!userInfo)}>
+                                {
+                                    currentUser.profilePicture 
+                                    ? <img src={currentUser.profilePicture} alt="" />
+                                    : <FaUser className='user-icon' size={25} />
+                                }
+                            </div>
+                            
+                            <div className={`user-info-drop-down ${userInfo ? 'active' : 'inactive'}`}>
+                                <div className="user-name">{currentUser.username}</div>
+                                <div className="email">{currentUser.email}</div>
+                                <Link onClick={() => setUserInfo(!userInfo)} to="/Dashboard?tab=profile">Profile</Link>
+                                {currentUser.isAdmin
+                                && (
+                                    <Link onClick={() => setUserInfo(!userInfo)} to="/Dashboard?tab=collection">
+                                        Dashboard
+                                    </Link>
+                                )}
+                                <button type='button' onClick={() => handleSignOut()}>Sign out</button>
+                            </div>
+                        
+                        </div>
+                    ) : (  <>
+                            <Link to='/signup'>
+                                <button type="button">Sign up</button>
+                            </Link>
+                        </>
+                    )
+        
                 }
             </div>
-            {
-                currentUser 
-                ? (
-                    <div className="user-info-container" ref={profileRef}>
-                        <div className='user-info' onClick={() => setUserInfo(!userInfo)}>
-                            {
-                                currentUser.profilePicture 
-                                ? <img src={currentUser.profilePicture} alt="" />
-                                : <FaUser className='user-icon' size={25} />
-                            }
-                        </div>
-                        
-                        <div className={`user-info-drop-down ${userInfo ? 'active' : 'inactive'}`}>
-                            <div className="user-name">{currentUser.username}</div>
-                            <div className="email">{currentUser.email}</div>
-                            <Link onClick={() => setUserInfo(!userInfo)} to="/Dashboard?tab=profile">Profile</Link>
-                            {currentUser.isAdmin
-                            && (
-                                <Link onClick={() => setUserInfo(!userInfo)} to="/Dashboard?tab=collection">
-                                    Dashboard
-                                </Link>
-                            )}
-                            <button type='button' onClick={() => handleSignOut()}>Sign out</button>
-                        </div>
-                       
-                    </div>
-                ) : (  <>
-                        <Link to='/signup'>
-                            <button type="button">Sign up</button>
-                        </Link>
-                       </>
-                )
-    
-            }
+                <IoChevronDownOutline className='sidebar-drop-icon' onClick={() => setSideBar(!sideBar)}/>
         </div>
       </div>
     )

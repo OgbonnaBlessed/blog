@@ -3,8 +3,10 @@ import { FaAngleLeft, FaAngleRight, FaCheck } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Author from '../Components/Author';
 import { motion } from 'framer-motion';
+import { useSelector } from 'react-redux';
 
 const Home = () => {
+  const { currentUser } = useSelector((state) => state.user);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -179,7 +181,7 @@ const Home = () => {
             opacity: 0,
             translateY: -50,
           }}
-          >Welcome to a Journey of Faith, Hope, and Grace</motion.h2>
+          >Welcome to a Journey of Faith!</motion.h2>
           <motion.div 
             initial={{
               opacity: 0,
@@ -196,10 +198,6 @@ const Home = () => {
           className="intro-main-content">
             <p>
             In a world filled with uncertainty, Christ is our constant. We invite you to embark on a journey of transformation, where hearts are healed, burdens are lifted, and souls are restored. Jesus stands at the door of your heart, gently knocking, not with condemnation, but with love, grace, and acceptance. "Come to me, all you who are weary and burdened, and I will give you rest" (Matthew 11:28).
-            </p>
-
-            <p>
-            No matter where you've been or what you've faced, Christ offers you a fresh start. His love knows no bounds, and His grace is available to all who seek Him. This is a place where His word comes alive, offering peace in the midst of chaos, joy for mourning, and beauty for ashes. "Therefore, if anyone is in Christ, the new creation has come: The old has gone, the new is here!" (2 Corinthians 5:17).
             </p>
 
             <p>

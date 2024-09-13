@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { signInSuccess, signInFailure, signInStart } from '../redux/user/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import OAuth from '../Components/OAuth';
+import { motion } from 'framer-motion';
 
 // CSS for the spinner
 const spinnerStyle = {
@@ -56,9 +57,35 @@ const SignIn = () => {
     }
   }
 
+  useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => {
+        dispatch(signInFailure(null));
+        // Optionally reset error if you also want it to disappear after 5 seconds
+        // dispatch(updateFailure(null)); 
+      }, 2000); // 3 seconds
+  
+      // Cleanup the timer if the component unmounts or the state changes before 5 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [dispatch, errorMessage]);
+
   return (
     <div className='sign-up-container'>
-      <div className={`sign-up-box ${theme === 'light' ? 'dark-box-shadow' : 'light-box-shadow'}`}>
+      <motion.div 
+      initial={{
+        opacity: 0,
+        translateY: 200,
+      }}
+      animate={{
+        opacity: 1,
+        translateY: 0
+      }}
+      exit={{
+        opacity: 0,
+        translateY: 200
+      }}
+      className={`sign-up-box ${theme === 'light' ? 'dark-box-shadow' : 'light-box-shadow'}`}>
         <h1>Sign In</h1>
         <form className="input-fields" onSubmit={handleSubmit}>
           <div className="input-container">
@@ -93,7 +120,7 @@ const SignIn = () => {
           {errorMessage}
         </p>
         }
-      </div>
+      </motion.div>
     </div>
   )
 }

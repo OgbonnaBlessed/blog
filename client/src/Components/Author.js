@@ -21,7 +21,7 @@ const Author = ({post}) => {
     }, [post])
 
   return (
-    <button type='button'>
+    <button type='button' className='Author'>
       {user.username}
     </button>
   )

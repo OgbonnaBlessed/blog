@@ -1,6 +1,5 @@
 import React from 'react'
 import About from '../Pages/About'
-import Projects from '../Pages/Projects'
 import SignIn from '../Pages/SignIn'
 import SignUp from '../Pages/SignUp'
 import Dashboard from '../Pages/Dashboard'
@@ -13,6 +12,7 @@ import PostPage from '../Pages/PostPage'
 import Search from '../Pages/Search'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
+import Contact from '../Pages/Contact'
 
 const AnimatedRoutes = () => {
     const location = useLocation();
@@ -22,7 +22,7 @@ const AnimatedRoutes = () => {
         <Routes location={location} key={location.pathname}>
             <Route path='/' element={<Home/>} />
             <Route path='/About' element={<About/>} />
-            <Route path='/Contact' element={<Projects/>} />
+            <Route path='/Contact' element={<Contact/>} />
             <Route path='/Post/:postSlug' element={<PostPage/>} />
             <Route path='/signin' element={<SignIn/>} />
             <Route path='/signup' element={<SignUp/>} />
