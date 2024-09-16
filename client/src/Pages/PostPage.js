@@ -146,7 +146,7 @@ const PostPage = () => {
         {/* Related Posts Section */}
         <div className='contain-home-side-content'>
           <div className='Home-side-content'>
-            <h1>Related Posts</h1>
+            <h1>Related Articles</h1>
             <div className='side-content-item'>
               {relatedPosts.length > 0 ? (
                 relatedPosts.map((relatedPost, i) => (
@@ -155,14 +155,14 @@ const PostPage = () => {
                   </Link>
                 ))
               ) : (
-                <p>No related posts found</p>
+                <p>No related article found</p>
               )}
             </div>
           </div>
 
           {/* Recent Posts Section */}
           <div className='Home-side-content'>
-            <h1>Recent Posts</h1>
+            <h1>Recent Articles</h1>
             <div className='side-content-item'>
               {recentPosts &&
                 recentPosts.map((post, i) => (

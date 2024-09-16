@@ -18,7 +18,8 @@
           "backdrop-filter",
           "width: fit-content",
           "height: fit-content",
-          "scrollbar-width"
+          "scrollbar-width",
+          "min-height: fit-content"
         ]
       }
     ]

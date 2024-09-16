@@ -77,7 +77,7 @@ const Contact = () => {
           translateY: -100
         }}
        className="form-intro">
-        <h2>We’d Love to Hear from You</h2>
+        <h2 className='love-text'>We’d Love to Hear from You</h2>
         <p>Whether you have a suggestion, want to work together, or simply have a question, this is the place to reach us!</p>
       </motion.div>
       <div className="contact-page-main">

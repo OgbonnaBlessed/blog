@@ -3,10 +3,8 @@ import { FaAngleLeft, FaAngleRight, FaCheck } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Author from '../Components/Author';
 import { motion } from 'framer-motion';
-import { useSelector } from 'react-redux';
 
 const Home = () => {
-  const { currentUser } = useSelector((state) => state.user);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -83,7 +81,7 @@ const Home = () => {
   }
 
   // Function to truncate post content to 20 characters max
-  const truncateTitleItem = (content, maxLength = 20) => {
+  const truncateTitleItem = (content, maxLength = 10) => {
     if (content.length > maxLength) {
       return content.slice(0, maxLength) + '...';
     }
@@ -185,7 +183,7 @@ const Home = () => {
           <motion.div 
             initial={{
               opacity: 0,
-              translateX: -200,
+              translateX: -700,
             }}
             animate={{
               opacity: 1,
@@ -193,7 +191,7 @@ const Home = () => {
             }}
             exit={{
               opacity: 0,
-              translateX: -200
+              translateX: -700
             }}
           className="intro-main-content">
             <p>
@@ -212,7 +210,7 @@ const Home = () => {
           <motion.img
           initial={{
             opacity: 0,
-            translateX: 200,
+            translateX: 500,
           }}
           animate={{
             opacity: 1,
@@ -220,7 +218,7 @@ const Home = () => {
           }}
           exit={{
             opacity: 0,
-            translateX: 200
+            translateX: 500
           }}
            src={`${process.env.PUBLIC_URL}/images/view1.jpeg`} alt="" />
         </div>
@@ -262,7 +260,7 @@ const Home = () => {
           ))}
         </div>
         <div className="Home-side-content">
-          <h2>Recent Posts</h2>
+          <h2>Recent articles</h2>
           <div className="side-content-item">
             {posts.slice(0, 5).map((post, i) => (
               <Link to={`/post/${post.slug}`} key={i}>

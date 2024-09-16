@@ -19,6 +19,16 @@ export const signup = async (req, res, next) => {
     });
 
     try {
+        const validUsername = await User.findOne({ username });
+        if (validUsername) {
+            return next(errorHandler(400, 'User name already exists')); // Displayed message when user exists
+        }
+
+        const validUser = await User.findOne({ email });
+        if (validUser) {
+            return next(errorHandler(400, 'Email already exists')); // Displayed message when email exists
+        }
+
         await newUser.save();
         res.json("Sign up successful");
     } catch (error) {
@@ -37,7 +47,7 @@ export const signin = async (req, res, next) => {
     try {
         const validUser = await User.findOne({ email });
         if (!validUser) {
-            return next(errorHandler(404, 'Invalid credentials')); // Displayed message when email does not exist
+            return next(errorHandler(404, 'Invalid credentials')); // Displayed message when email does exists
         }
 
         const validPassword = bcryptjs.compareSync(password, validUser.password);

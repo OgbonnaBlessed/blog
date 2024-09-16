@@ -4,6 +4,8 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { app } from '../firebase';
 import { useNavigate } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaTimes } from 'react-icons/fa';
 
 const CreatePost = () => {
     const [open, setOpen] = useState(false);
@@ -13,6 +15,7 @@ const CreatePost = () => {
     const [imageUploadError, setImageUploadEror] = useState(null);
     const [formData, setFormData] = useState({});
     const [publishError, setPublishError] = useState(null);
+    const [showModal, setShowModal] = useState(false);  // Modal visibility state
     const navigate = useNavigate();
 
     const handleFileUpload = (e) => {
@@ -64,6 +67,7 @@ const CreatePost = () => {
       } catch (error) {
         setImageUploadEror('Image upload failed');
         setImageUploadProgress(null);
+        setShowModal(true);  // Show the modal when there's an error
         console.log(error);
       }
     }
@@ -109,6 +113,7 @@ const CreatePost = () => {
 
         if (!res.ok) {
           setPublishError(data.message);
+          setShowModal(true);  // Show the modal when there's an error
           return;
         } else {
           setPublishError(null);
@@ -117,22 +122,60 @@ const CreatePost = () => {
 
       } catch (error) {
         setPublishError('Something went wrong');
+        setShowModal(true);
       }
     }
+
+    useEffect(() => {
+      if (showModal || imageUploadError) {
+        const timer = setTimeout(() => {
+          setShowModal(false);
+          setImageUploadEror(null);
+        }, 3000);  // Auto-close modal after 3 seconds
+  
+        return () => clearTimeout(timer);  // Cleanup the timer if the modal is manually closed
+      }
+    }, [showModal, imageUploadError]);
 
     const spinnerStyle = {
       border: '2px solid rgba(0, 0, 0, 0.1)',
       width: '20px',
       height: '20px',
       borderRadius: '50%',
-      borderTopColor: 'rgba(4, 122, 14, 0.438)',
+      borderTopColor: '#444444',
       animation: 'spin 1s ease-in-out infinite',
     };
 
   return (
     <div className='create-container'>
-      <div className="create-box">
-        <h1>Create a Post</h1>
+      <motion.div 
+      initial={{
+        opacity: 0,
+        translateY: 200,
+      }}
+      animate={{
+        opacity: 1,
+        translateY: 0
+      }}
+      exit={{
+        opacity: 0,
+        translateY: 200
+      }}
+      className="create-box">
+        <motion.h1
+          initial={{
+            opacity: 0,
+            translateY: -50,
+          }}
+          animate={{
+            opacity: 1,
+            translateY: 0
+          }}
+          exit={{
+            opacity: 0,
+            translateY: -50
+          }}
+        >Create a Post</motion.h1>
         <form onSubmit={handleSubmit}>
            <div className="select">
                 <input 
@@ -150,11 +193,16 @@ const CreatePost = () => {
                     >{selectedCategory}
                   </button>
                     <ul className={`select-drop-down ${open ? 'active' : 'inactive'}`}>
-                        <li onClick={() => selectCategory('React')}>React</li>
-                        <li onClick={() => selectCategory('Tailwind')}>Tailwind</li>
-                        <li onClick={() => selectCategory('Firebase')}>Firebase</li>
-                        <li onClick={() => selectCategory('Bootstrap')}>Bootstrap</li>
-                        <li onClick={() => selectCategory('React Native')}>React Native</li>
+                        <li onClick={() => selectCategory('Purpose')}>Purpose</li>
+                        <li onClick={() => selectCategory('Faith confessions')}>Faith confessions</li>
+                        <li onClick={() => selectCategory('Spiritual warfare')}>Spiritual warfare</li>
+                        <li onClick={() => selectCategory('Healing')}>Healing</li>
+                        <li onClick={() => selectCategory('Fasting')}>Fasting</li>
+                        <li onClick={() => selectCategory('Salvation')}>Salvation</li>
+                        <li onClick={() => selectCategory('Christian lifestyle')}>Christian lifestyle</li>
+                        <li onClick={() => selectCategory('Holy spirit')}>Holy spirit</li>
+                        <li onClick={() => selectCategory('Inspirational messages')}>Inspirational messages</li>
+                        <li onClick={() => selectCategory('Family life')}>Family life</li>
                     </ul>
                 </div>
            </div>
@@ -201,11 +249,39 @@ const CreatePost = () => {
             />
             <button type="submit" className='publish-button'>Publish</button>
             {
-              publishError &&
-              <p>{publishError}</p>
+              
+              <p></p>
             }
         </form>
-      </div>
+      </motion.div>
+      {publishError &&
+      <AnimatePresence>
+          {showModal && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="modal-container"
+            >
+              <motion.div
+                initial={{ translateY: -400, opacity: 0 }}
+                animate={{ translateY: 0, opacity: 1 }}
+                exit={{ translateY: -400, opacity: 0 }}
+                className="modal-box"
+              >
+                <FaTimes
+                  className="close-modal"
+                  onClick={() => setShowModal(false)}
+                />
+                <p className="modal-text">{publishError}</p>
+                <motion.div className="actions">
+                  <button type="button" onClick={() => setShowModal(false)}>OK</button>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        }
     </div>
   )
 }

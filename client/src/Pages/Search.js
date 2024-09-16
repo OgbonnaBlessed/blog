@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { FaAngleDown } from 'react-icons/fa'
+import { FaAngleDoubleDown, FaAngleDown } from 'react-icons/fa'
 import { useLocation, useNavigate } from 'react-router-dom';
 import PostCard from '../Components/PostCard';
 import { motion } from 'framer-motion';
@@ -15,6 +15,7 @@ const Search = () => {
     const [showMore, setShowMore] = useState(false);
     const [openSort, setOpenSort] = useState(false);
     const [openCategory, setOpenCategory] = useState(false);
+    const [sideBar, setSideBar] = useState(false);
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -129,6 +130,7 @@ const Search = () => {
 
     const categoryRef = useRef()
     const sortRef = useRef();
+    const sidebarRef = useRef();
 
     useEffect(() => {
         const closeProfileBox = (event) => {
@@ -139,6 +141,10 @@ const Search = () => {
         if (!categoryRef.current.contains(event.target)) {
             setOpenCategory(false);
         }
+
+        if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+            setSideBar(false);
+        }
         };
 
         document.addEventListener('mousedown', closeProfileBox);
@@ -148,23 +154,11 @@ const Search = () => {
         };
     });
 
+
     return (
         <div className='search-page-container'>
-            <div className="search-side-bar">
-                <motion.form 
-                initial={{
-                  opacity: 0,
-                  translateY: 200,
-                }}
-                animate={{
-                  opacity: 1,
-                  translateY: 0
-                }}
-                exit={{
-                  opacity: 0,
-                  translateY: 200
-                }}
-                onSubmit={handleSubmit}>
+            <div className="search-side-bar" ref={sidebarRef}>
+                <form onSubmit={handleSubmit} className={`search-form ${sideBar ? 'active' : 'inactive'}`}>
                     <div className="form-search-item">
                         <p>Term:</p>
                         <input 
@@ -201,23 +195,29 @@ const Search = () => {
                             
                                 <ul className={`select-drop-down ${openCategory ? 'active' : 'inactive'}`}>
                                     <li onClick={() => selectOption('category', 'All')}>All</li>
-                                    <li onClick={() => selectOption('category', 'React')}>React</li>
-                                    <li onClick={() => selectOption('category', 'Tailwind')}>Tailwind</li>
-                                    <li onClick={() => selectOption('category', 'Bootstrap')}>Bootstrap</li>
-                                    <li onClick={() => selectOption('category', 'Firebase')}>Firebase</li>
-                                    <li onClick={() => selectOption('category', 'React Native')}>React Native</li>
+                                    <li onClick={() => selectOption('category', 'Purpose')}>Purpose</li>
+                                    <li onClick={() => selectOption('category', 'Faith confessions')}>Faith confessions</li>
+                                    <li onClick={() => selectOption('category', 'Spiritual warfare')}>Spiritual warfare</li>
+                                    <li onClick={() => selectOption('category', 'Healing')}>Healing</li>
+                                    <li onClick={() => selectOption('category', 'Fasting')}>Fasting</li>
+                                    <li onClick={() => selectOption('category', 'Salvation')}>Salvation</li>
+                                    <li onClick={() => selectOption('category', 'Christian lifestyle')}>Christian lifestyle</li>
+                                    <li onClick={() => selectOption('category', 'Holy spirit')}>Holy spirit</li>
+                                    <li onClick={() => selectOption('category', 'Inspirational messages')}>Inspirational messages</li>
+                                    <li onClick={() => selectOption('category', 'Family life')}>Family life</li>
                                 </ul>
                           
                         </div>
                     </div>
-                    <button className='search-form-button' type="submit">
+                    <button className='search-form-button' type="submit" onClick={() => setSideBar(!sideBar)}>
                         Search
                     </button>
-                </motion.form>
+                </form>
+                <FaAngleDoubleDown className={`reveal-search-bar ${sideBar ? 'inactive' : 'active'}`} onClick={() => setSideBar(!sideBar)}/>
             </div>
             <div className="search-post-display">
                 <div className="search-post-display-head">
-                    <h1>POSTS RESULTS</h1>
+                    <h1>ARTICLES RESULTS</h1>
                 </div>
                 <div className="search-content">
                     {!loading && posts.length === 0 ? (

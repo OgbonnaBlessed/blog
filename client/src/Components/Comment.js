@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import { FaThumbsUp } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
+import { motion } from 'framer-motion'
 
 const Comment = ({comment, onLike, onEdit, onDelete}) => {
     const [user, setUser] = useState({});
@@ -61,12 +62,24 @@ const Comment = ({comment, onLike, onEdit, onDelete}) => {
         {isEditing 
         ? (
             <div className='comment-content edit-comment-content'>
-                <textarea 
+                <motion.textarea 
+                    initial={{
+                        opacity: 0,
+                        translateY: -50,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        translateY: 0
+                      }}
+                      exit={{
+                        opacity: 0,
+                        translateY: -50,
+                      }}
                     rows={4}
                     value={editedContent}
                     onChange={(e) => setEditedContent(e.target.value)}
                 >
-                </textarea>
+                </motion.textarea>
                 <div className="comment-content-edit-actions">
                     <button type="button" onClick={handleSave}>Save</button>
                     <button 

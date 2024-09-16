@@ -145,10 +145,20 @@ const Header = () => {
                             <div className={`user-info-drop-down ${userInfo ? 'active' : 'inactive'}`}>
                                 <div className="user-name">{currentUser.username}</div>
                                 <div className="email">{currentUser.email}</div>
-                                <Link onClick={() => setUserInfo(!userInfo)} to="/Dashboard?tab=profile">Profile</Link>
+                                <Link 
+                                    onClick={() => {
+                                        setUserInfo(!userInfo)
+                                        setSideBar(!sideBar)
+                                        }} 
+                                    to="/Dashboard?tab=profile">Profile</Link>
                                 {currentUser.isAdmin
                                 && (
-                                    <Link onClick={() => setUserInfo(!userInfo)} to="/Dashboard?tab=collection">
+                                    <Link 
+                                        onClick={() => {
+                                            setUserInfo(!userInfo)
+                                            setSideBar(!sideBar)
+                                            }} 
+                                        to="/Dashboard?tab=collection">
                                         Dashboard
                                     </Link>
                                 )}
@@ -157,7 +167,7 @@ const Header = () => {
                         
                         </div>
                     ) : (  <>
-                            <Link to='/signup'>
+                            <Link to='/signup' onClick={() => setSideBar(!sideBar)}>
                                 <button type="button">Sign up</button>
                             </Link>
                         </>

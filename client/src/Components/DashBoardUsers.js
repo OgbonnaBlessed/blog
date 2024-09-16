@@ -73,7 +73,7 @@ const DashBoardUsers = () => {
 
   return (
     <div className='dashboard-posts-list'>
-        <div className="dashboard-posts-container">
+        <div className="dashboard-posts-container users-list">
             {currentUser.isAdmin && users.length > 0 ?
             (<>
             <motion.table
@@ -103,21 +103,21 @@ const DashBoardUsers = () => {
                 {users.map((user, i) => (
                     <tbody key={i}>
                         <tr>
-                            <td>{new Date(user.createdAt).toLocaleDateString()}</td>
-                            <td>
+                            <td data-label="Date created">{new Date(user.createdAt).toLocaleDateString()}</td>
+                            <td data-label="User image">
                                 <img src={user.profilePicture} alt={user.username} className='dash-board-user-image' />
                             </td>
-                            <td>
+                            <td data-label="User name">
                                 {user.username}
                             </td>
-                            <td>{user.email}</td>
-                            <td>
+                            <td data-label="User email">{user.email}</td>
+                            <td data-label="Admin">
                                 {user.isAdmin
                                 ? <p>Yes</p>
                                 : <p>No</p>
                                 }
                             </td>
-                            <td>
+                            <td data-label="Delete">
                                 <span 
                                     className='admin-delete-post'
                                     onClick={() => {

@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { signInSuccess, signInFailure, signInStart } from '../redux/user/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import OAuth from '../Components/OAuth';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaTimes } from 'react-icons/fa';
 
 // CSS for the spinner
 const spinnerStyle = {
@@ -19,6 +20,7 @@ const SignIn = () => {
   const [formData, setFormData] = useState({});
   const { loading, error: errorMessage } = useSelector(state => state.user);
   const { theme } = useSelector(state => state.theme);
+  const [showModal, setShowModal] = useState(false);  // Modal visibility state
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -30,7 +32,9 @@ const SignIn = () => {
     e.preventDefault();
 
     if (!formData.email || !formData.password) {
-      return dispatch(signInFailure('Kindly fill out all fields.'));
+      dispatch(signInFailure('Kindly fill out all fields.'));
+      setShowModal(true);  // Show the modal when there's an error
+      return;
     }
 
     try {
@@ -45,6 +49,8 @@ const SignIn = () => {
 
       if (data.success === false) {
         dispatch(signInFailure(data.message));
+        setShowModal(true);  // Show the modal when there's an error
+        return;
       };
 
       if (res.ok) {
@@ -54,21 +60,22 @@ const SignIn = () => {
 
     } catch (error) {
       dispatch(signInFailure(error.message));
+      setShowModal(true);  // Show the modal when there's an error
     }
   }
 
   useEffect(() => {
-    if (errorMessage) {
+    if (showModal) {
       const timer = setTimeout(() => {
-        dispatch(signInFailure(null));
+        setShowModal(false);
         // Optionally reset error if you also want it to disappear after 5 seconds
         // dispatch(updateFailure(null)); 
-      }, 2000); // 3 seconds
+      }, 3000); // 3 seconds
   
       // Cleanup the timer if the component unmounts or the state changes before 5 seconds
       return () => clearTimeout(timer);
     }
-  }, [dispatch, errorMessage]);
+  }, [showModal]);
 
   return (
     <div className='sign-up-container'>
@@ -116,10 +123,33 @@ const SignIn = () => {
           </Link>
         </div>
         {errorMessage && 
-        <p className="error">
-          {errorMessage}
-        </p>
-        }
+        <AnimatePresence>
+          {showModal && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="modal-container"
+            >
+              <motion.div
+                initial={{ translateY: -400, opacity: 0 }}
+                animate={{ translateY: 0, opacity: 1 }}
+                exit={{ translateY: -400, opacity: 0 }}
+                className="modal-box"
+              >
+                <FaTimes
+                  className="close-modal"
+                  onClick={() => setShowModal(false)}
+                />
+                <p className="modal-text">{errorMessage}</p>
+                <motion.div className="actions">
+                  <button type="button" onClick={() => setShowModal(false)}>OK</button>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        }     
       </motion.div>
     </div>
   )

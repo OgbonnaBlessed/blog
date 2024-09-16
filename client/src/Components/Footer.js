@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FaFacebook, FaLinkedin, FaInstagram, FaYoutube, FaTimes } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const { theme } = useSelector(state => state.theme);
@@ -56,21 +57,21 @@ const Footer = () => {
       <div className="top-box">
         <div className="programs">
           <h2>Programs</h2>
-          <a href="#corporate">Corporate</a>
-          <a href="#one-to-one">One to One</a>
-          <a href="#consulting">Consulting</a>
+          <Link to="/Contact">Corporate</Link>
+          <Link to="/Contact">One to One</Link>
+          <Link to="/Contact">Consulting</Link>
         </div>
         <div className="service">
           <h2>Services</h2>
-          <a href="#training">Training</a>
-          <a href="#consulting">Consulting</a>
-          <a href="#coaching">Coaching</a>
+          <Link to="/Contact">Training</Link>
+          <Link to="/Contact">Consulting</Link>
+          <Link to="/Contact">Coaching</Link>
         </div>
         <div className="contact">
           <h2>Contact</h2>
-          <a href="#home">Home</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
+          <Link to="/">Home</Link>
+          <Link to="/About">About</Link>
+          <Link to="/Contact">Contact</Link>
         </div>
         <div className="news-letter">
           <h2>Newsletter</h2>

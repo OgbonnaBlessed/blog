@@ -106,19 +106,19 @@ const DashBoardPosts = () => {
                 {userPosts.map((post, i) => (
                     <tbody key={i}>
                         <tr>
-                            <td>{new Date(post.updatedAt).toLocaleDateString()}</td>
-                            <td>
+                            <td data-label="Date updated">{new Date(post.updatedAt).toLocaleDateString()}</td>
+                            <td data-label="Post image">
                                 <Link to={`/post/${post.slug}`}>
                                     <img src={post.image} alt={post.title} />
                                 </Link>
                             </td>
-                            <td>
+                            <td data-label="Post title">
                                 <Link to={`/post/${post.slug}`}>
                                     {post.title}
                                 </Link>
                             </td>
-                            <td>{post.category}</td>
-                            <td>
+                            <td data-label="Category">{post.category}</td>
+                            <td data-label="Delete">
                                 <span 
                                     className='admin-delete-post'
                                     onClick={() => {
@@ -129,7 +129,7 @@ const DashBoardPosts = () => {
                                     Delete
                                 </span>
                             </td>
-                            <td>
+                            <td data-label="Edit">
                                 <Link to={`/update-post/${post._id}`}>
                                     <span className='admin-edit-post'>Edit</span>
                                 </Link>

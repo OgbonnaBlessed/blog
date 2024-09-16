@@ -104,18 +104,18 @@ const DashBoardComments = () => {
                 {comments.map((comment, i) => (
                     <tbody key={i}>
                         <tr>
-                            <td>{new Date(comment.updatedAt).toLocaleDateString()}</td>
-                            <td>
+                            <td data-label="Date updated">{new Date(comment.updatedAt).toLocaleDateString()}</td>
+                            <td data-label="Content">
                                 {comment.content}
                             </td>
-                            <td>
+                            <td data-label="Likes">
                                 {comment.numberOfLikes}
                             </td>
-                            <td>{comment.postId}</td>
-                            <td>
+                            <td data-label="PostID">{comment.postId}</td>
+                            <td data-label="UserID">
                                 {comment.userId}
                             </td>
-                            <td>
+                            <td data-label="Delete">
                                 <span 
                                     className='admin-delete-post'
                                     onClick={() => {

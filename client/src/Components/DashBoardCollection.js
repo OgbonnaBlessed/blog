@@ -158,10 +158,10 @@ const DashBoardCollection = () => {
                 {users.map((user, i) => (
                 <tbody key={i}>
                     <tr>
-                        <td>
+                        <td data-label="User image">
                             <img src={user.profilePicture} alt="" />
                         </td>
-                        <td>
+                        <td data-label="User name">
                             {user.username}
                         </td>
                     </tr>
@@ -186,8 +186,8 @@ const DashBoardCollection = () => {
                 {comments.map((comment, i) => (
                 <tbody key={i}>
                     <tr>
-                        <td>{comment.content}</td>
-                        <td>{comment.numberOfLikes}</td>
+                        <td data-label="Content">{comment.content}</td>
+                        <td data-label="Likes">{comment.numberOfLikes}</td>
                     </tr>
                 </tbody>
                 ))}
@@ -212,11 +212,11 @@ const DashBoardCollection = () => {
             {posts.map((post, i) => (
             <tbody key={i}>
                 <tr>
-                    <td>
+                    <td data-label="Post image">
                         <img src={post.image} alt="" />
                     </td>
-                    <td>{post.title}</td>
-                    <td>{post.category}</td>
+                    <td data-label="Title">{post.title}</td>
+                    <td data-label="Category">{post.category}</td>
                 </tr>
             </tbody>
             ))}
