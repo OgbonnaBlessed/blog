@@ -21,12 +21,12 @@
 }
 
 .toggle-icon {
-  color: #444444;
+  color: #c5a900;
   transition: all .5s ease;
 }
 
 .light .toggle-icon {
-  color: #d3d3d3;
+  color: #ffd700;
 }
 
 .theme-container {
@@ -172,7 +172,7 @@ a {
   display: flex;
   align-items: center;
   height: 2.4rem;
-  border: 2px solid #444444;
+  border: 2px solid #4a4a4a;
   border-radius: 8px;
   width: 16rem;
   transition: all .5s ease;
@@ -209,12 +209,12 @@ a {
 }
 
 .search-icon .icon {
-  color: #4a4a44;
+  color: #c5a900;
   transition: all .5s ease;
 }
 
 .light .search-icon .icon {
-  color: #d3d3d3;
+  color: #ffd700;
 }
 
 .search-box-md {
@@ -266,7 +266,7 @@ a {
 }
 
 .background-toggle-box {
-  border: 1px solid #444444;
+  border: 2px solid #4a4a4a;
   padding: 8px;
   border-radius: 5px;
   display: flex;
@@ -277,7 +277,7 @@ a {
 }
 
 .light .background-toggle-box {
-  border: 1px solid #d3d3d3;
+  border: 2px solid #d3d3d3;
 }
 
 .sign-up-container {
@@ -1860,24 +1860,21 @@ td .admin-delete-post {
 .featured-posts-container {
   width: 80%;
   position: relative;
-  height: fit-content;
   transition: all .5s ease;
 }
 
 .featured-posts-box {
   display: flex;
   width: 100%;
+  height: auto;
   align-items: center;
+  padding: 10px 0;
   gap: 2rem;
 }
 
 .featured-posts-container .featured-posts-box {
   overflow-x: auto;
   scrollbar-width: none;
-}
-
-.featured-posts-box::-webkit-scrollbar {
-  display: none;
 }
 
 .featured-posts {
@@ -2950,7 +2947,7 @@ td .admin-delete-post {
 
   .search-box-md {
     width: 3rem;
-    border: 2px solid #444444;
+    border: 2px solid #4a4a4a;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -2963,12 +2960,12 @@ td .admin-delete-post {
   }
 
   .icon-md {
-    color: #444444;
+    color: #c5a900;
     transition: all .5s ease;
   }
 
   .light .icon-md {
-    color: #d3d3d3;
+    color: #ffd700;
   }
 
   .search-box-md .search-icon {

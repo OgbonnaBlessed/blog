@@ -127,7 +127,7 @@ const Header = () => {
                     {
                         theme === 'light' 
                         ? (<FaMoon className='toggle-icon' size={18}/>)
-                        : (<MdSunny className='toggle-icon' size={20} />)
+                        : (<MdSunny className='toggle-icon' size={18} />)
                     }
                 </div>
                 {

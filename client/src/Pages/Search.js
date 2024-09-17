@@ -24,7 +24,7 @@ const Search = () => {
 
     useEffect(() => {
         const urlParams = new URLSearchParams(location.search);
-        const searchTermFromUrl = urlParams.get('searchTerm');
+        const searchTermFromUrl = urlParams.get('searchTerm') || '';
         const sortFromUrl = urlParams.get('sort');
         const categoryFromUrl = urlParams.get('category') || 'All';
 
@@ -188,7 +188,7 @@ const Search = () => {
                                 <li onClick={() => selectOption('sort', 'desc')}>Latest</li>
                                 <li onClick={() => selectOption('sort', 'asc')}>Oldest</li>
                             </ul>
-                    </div>
+                    </div> 
                 </div>
                 <div className="form-search-item">
                     <label>Category:</label>
