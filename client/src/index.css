@@ -1638,6 +1638,7 @@ td .admin-delete-post {
   align-items: center;
   gap: 1rem;
   box-shadow: 0 0 1rem rgba(255, 255, 255, 0.1);
+  transition: all .5s ease;
 }
 
 .light .post-card-item {
@@ -2346,7 +2347,7 @@ td .admin-delete-post {
 
 .pagination {
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
   align-items: center;
   justify-content: center;
   width: 100%;

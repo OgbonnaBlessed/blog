@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { FaCheck } from 'react-icons/fa';
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion';
 
 const PostCard = ({ post }) => {
     const [user, setUser] = useState({});
@@ -31,7 +32,20 @@ const PostCard = ({ post }) => {
     }
 
   return (
-    <div className='post-card-item'>
+    <motion.div 
+    initial={{
+      opacity: 0,
+      translateY: 50,
+    }}
+    animate={{
+        opacity: 1,
+        translateY: 0,
+    }}
+    exit={{
+        opacity: 0,
+        translateY: 50,
+    }}
+    className='post-card-item'>
         <img src={post.image} alt="post cover" />
         <div className="post-card-info">
           <div className="post-card-author">
@@ -51,7 +65,7 @@ const PostCard = ({ post }) => {
             </button>
           </Link>
         </div>
-    </div>
+    </motion.div>
   )
 }
 

@@ -13,9 +13,11 @@ const Search = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showMore, setShowMore] = useState(false);
+    const [showLess, setShowLess] = useState(false);  // For "View Less"
     const [openSort, setOpenSort] = useState(false);
     const [openCategory, setOpenCategory] = useState(false);
     const [sideBar, setSideBar] = useState(false);
+    const [initialPosts, setInitialPosts] = useState([]);  // Store the initial posts for "View Less"
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -45,17 +47,17 @@ const Search = () => {
                 return;
             }
 
-            if (res.ok) {
-                const data = await res.json();
-                setPosts(data.posts);
-                setLoading(false);
+            const data = await res.json();
+            setPosts(data.posts);
+            setInitialPosts(data.posts);  // Store initial posts
+            setLoading(false);
 
-                if (data.posts.length >= 9) {
-                    setShowMore(true);
-                } else {
-                    setShowMore(false);
-                }
+            if (data.posts.length >= 9) {
+                setShowMore(true);
+            } else {
+                setShowMore(false);
             }
+            setShowLess(false);  // Disable "View Less" by default
         }
         fetchPosts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -96,16 +98,21 @@ const Search = () => {
             return;
         }
 
-        if (res.ok) {
-            const data = await res.json();
-            setPosts([ ...posts, ...data.posts ]);
+        const data = await res.json();
+        setPosts([ ...posts, ...data.posts ]);  // Add the new posts to the existing ones
 
-            if (data.posts.length === 9) {
-                setShowMore(true);
-            } else {
-                setShowMore(false);
-            }
+        if (data.posts.length === 9) {
+            setShowMore(true);
+        } else {
+            setShowMore(false);  // Hide "View More" when less than 9 posts are fetched
         }
+        setShowLess(true);  // Enable "View Less" after "View More" is clicked
+    }
+
+    const handleViewLess = () => {
+        setPosts(initialPosts);  // Reset to the initial posts
+        setShowLess(false);  // Disable "View Less" after it's clicked
+        setShowMore(true);  // Re-enable "View More"
     }
 
     const toggleDropdown = (type) => {
@@ -155,101 +162,112 @@ const Search = () => {
     });
 
 
-    return (
-        <div className='search-page-container'>
-            <div className="search-side-bar" ref={sidebarRef}>
-                <form onSubmit={handleSubmit} className={`search-form ${sideBar ? 'active' : 'inactive'}`}>
-                    <div className="form-search-item">
-                        <p>Term:</p>
-                        <input 
-                            type="text" 
-                            id='searchTerm'
-                            value={sidebarData.searchTerm}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div className="form-search-item">
-                        <label>Sort:</label>
-                        <div 
-                            className='select-box' 
-                            ref={sortRef} 
-                            onClick={() => toggleDropdown('sort')}>
-                            <button type="button" className="dropdown-button">
-                                {sidebarData.sort === 'desc' ? 'Latest' : 'Oldest'} <FaAngleDown />
-                            </button>
-                                <ul className={`select-drop-down ${openSort ? 'active' : 'inactive'}`}>
-                                    <li onClick={() => selectOption('sort', 'desc')}>Latest</li>
-                                    <li onClick={() => selectOption('sort', 'asc')}>Oldest</li>
-                                </ul>
-                        </div>
-                    </div>
-                    <div className="form-search-item">
-                        <label>Category:</label>
-                        <div 
-                            className='select-box' 
-                            ref={categoryRef} 
-                            onClick={() => toggleDropdown('category')}>
-                            <button type="button" className="dropdown-button">
-                                {sidebarData.category} <FaAngleDown />
-                            </button>
-                            
-                                <ul className={`select-drop-down ${openCategory ? 'active' : 'inactive'}`}>
-                                    <li onClick={() => selectOption('category', 'All')}>All</li>
-                                    <li onClick={() => selectOption('category', 'Purpose')}>Purpose</li>
-                                    <li onClick={() => selectOption('category', 'Faith confessions')}>Faith confessions</li>
-                                    <li onClick={() => selectOption('category', 'Spiritual warfare')}>Spiritual warfare</li>
-                                    <li onClick={() => selectOption('category', 'Healing')}>Healing</li>
-                                    <li onClick={() => selectOption('category', 'Fasting')}>Fasting</li>
-                                    <li onClick={() => selectOption('category', 'Salvation')}>Salvation</li>
-                                    <li onClick={() => selectOption('category', 'Christian lifestyle')}>Christian lifestyle</li>
-                                    <li onClick={() => selectOption('category', 'Holy spirit')}>Holy spirit</li>
-                                    <li onClick={() => selectOption('category', 'Inspirational messages')}>Inspirational messages</li>
-                                    <li onClick={() => selectOption('category', 'Family life')}>Family life</li>
-                                </ul>
-                          
-                        </div>
-                    </div>
-                    <button className='search-form-button' type="submit" onClick={() => setSideBar(!sideBar)}>
-                        Search
-                    </button>
-                </form>
-                <FaAngleDoubleDown className={`reveal-search-bar ${sideBar ? 'inactive' : 'active'}`} onClick={() => setSideBar(!sideBar)}/>
-            </div>
-            <div className="search-post-display">
-                <div className="search-post-display-head">
-                    <h1>ARTICLES RESULTS</h1>
+  return (
+    <div className='search-page-container'>
+        <div className="search-side-bar" ref={sidebarRef}>
+            <form onSubmit={handleSubmit} className={`search-form ${sideBar ? 'active' : 'inactive'}`}>
+                <div className="form-search-item">
+                    <p>Term:</p>
+                    <input 
+                        type="text" 
+                        id='searchTerm'
+                        value={sidebarData.searchTerm}
+                        onChange={handleChange}
+                    />
                 </div>
-                <div className="search-content">
-                    {!loading && posts.length === 0 ? (
-                        <p>No post found!</p>
-                    ) : ''}
-                    {loading ? (
-                    <div className="spinner-container">
-                        <div style={{
-                            border: '4px solid rgba(0, 0, 0, 0.1)',
-                            width: '80px',
-                            height: '80px',
-                            borderRadius: '50%',
-                            borderTopColor: '#444444',
-                            animation: 'spin 1s ease-in-out infinite',
-                        }}></div>
+                <div className="form-search-item">
+                    <label>Sort:</label>
+                    <div 
+                        className='select-box' 
+                        ref={sortRef} 
+                        onClick={() => toggleDropdown('sort')}>
+                        <button type="button" className="dropdown-button">
+                            {sidebarData.sort === 'desc' ? 'Latest' : 'Oldest'} <FaAngleDown />
+                        </button>
+                            <ul className={`select-drop-down ${openSort ? 'active' : 'inactive'}`}>
+                                <li onClick={() => selectOption('sort', 'desc')}>Latest</li>
+                                <li onClick={() => selectOption('sort', 'asc')}>Oldest</li>
+                            </ul>
                     </div>
-                    ) : ''}
-                    {!loading && posts && 
-                    <motion.div 
-                    initial={{
-                        opacity: 0,
-                        translateY: 200,
-                      }}
-                      animate={{
-                        opacity: 1,
-                        translateY: 0
-                      }}
-                      exit={{
-                        opacity: 0,
-                        translateY: 200
-                      }}
-                    className="posts-all-container">
+                </div>
+                <div className="form-search-item">
+                    <label>Category:</label>
+                    <div 
+                        className='select-box' 
+                        ref={categoryRef} 
+                        onClick={() => toggleDropdown('category')}>
+                        <button type="button" className="dropdown-button">
+                            {sidebarData.category} <FaAngleDown />
+                        </button>
+                        
+                            <ul className={`select-drop-down ${openCategory ? 'active' : 'inactive'}`}>
+                                <li onClick={() => selectOption('category', 'All')}>All</li>
+                                <li onClick={() => selectOption('category', 'Purpose')}>Purpose</li>
+                                <li onClick={() => selectOption('category', 'Faith confessions')}>Faith confessions</li>
+                                <li onClick={() => selectOption('category', 'Spiritual warfare')}>Spiritual warfare</li>
+                                <li onClick={() => selectOption('category', 'Healing')}>Healing</li>
+                                <li onClick={() => selectOption('category', 'Fasting')}>Fasting</li>
+                                <li onClick={() => selectOption('category', 'Salvation')}>Salvation</li>
+                                <li onClick={() => selectOption('category', 'Christian lifestyle')}>Christian lifestyle</li>
+                                <li onClick={() => selectOption('category', 'Holy spirit')}>Holy spirit</li>
+                                <li onClick={() => selectOption('category', 'Inspirational messages')}>Inspirational messages</li>
+                                <li onClick={() => selectOption('category', 'Family life')}>Family life</li>
+                            </ul>
+                        
+                    </div>
+                </div>
+                <button
+                    className='search-form-button'
+                    type="submit"
+                    onClick={() => setSideBar(!sideBar)}
+                >
+                    Search
+                </button>
+            </form>
+            <FaAngleDoubleDown
+                className={`reveal-search-bar ${sideBar ? 'inactive' : 'active'}`}
+                onClick={() => setSideBar(!sideBar)}
+            />
+            </div>
+
+        <div className="search-post-display">
+            <div className="search-post-display-head">
+                <h1>ARTICLES RESULTS</h1>
+            </div>
+            <div className="search-content">
+                {!loading && posts.length === 0 ? (
+                    <p>No post found!</p>
+                ) : ''}
+                {loading ? (
+                    <div className="spinner-container">
+                        <div
+                            style={{
+                                border: '4px solid rgba(0, 0, 0, 0.1)',
+                                width: '80px',
+                                height: '80px',
+                                borderRadius: '50%',
+                                borderTopColor: '#444444',
+                                animation: 'spin 1s ease-in-out infinite',
+                            }}
+                        ></div>
+                    </div>
+                ) : ''}
+                {!loading && posts && (
+                    <motion.div
+                        initial={{
+                            opacity: 0,
+                            translateY: 200,
+                        }}
+                        animate={{
+                            opacity: 1,
+                            translateY: 0,
+                        }}
+                        exit={{
+                            opacity: 0,
+                            translateY: 200,
+                        }}
+                        className="posts-all-container"
+                    >
                         <div className="posts-all-box">
                             {posts.map((post) => (
                                 <PostCard key={post._id} post={post} />
@@ -257,14 +275,22 @@ const Search = () => {
                         </div>
                         <div className="pagination">
                             {showMore && (
-                                <p className='view-more' onClick={handleViewMore}>View more</p>
+                                <p className='view-more' onClick={handleViewMore}>
+                                    View more
+                                </p>
+                            )}
+                            {showLess && (
+                                <p className='view-more' onClick={handleViewLess}>
+                                    View less
+                                </p>
                             )}
                         </div>
-                    </motion.div>}
-                </div>
+                    </motion.div>
+                )}
             </div>
         </div>
-    )
-}
+    </div>
+);
+};
 
 export default Search;
