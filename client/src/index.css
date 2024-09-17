@@ -21,7 +21,12 @@
 }
 
 .toggle-icon {
-  color: black;
+  color: #444444;
+  transition: all .5s ease;
+}
+
+.light .toggle-icon {
+  color: #d3d3d3;
 }
 
 .theme-container {
@@ -167,9 +172,10 @@ a {
   display: flex;
   align-items: center;
   height: 2.4rem;
-  border: 2px solid black;
+  border: 2px solid #444444;
   border-radius: 8px;
   width: 16rem;
+  transition: all .5s ease;
 }
 
 .search-box input {
@@ -198,16 +204,25 @@ a {
   font-size: 1.8rem;
 }
 
+.light .search-box {
+  border: 2px solid #d3d3d3;
+}
+
+.search-icon .icon {
+  color: #4a4a44;
+  transition: all .5s ease;
+}
+
+.light .search-icon .icon {
+  color: #d3d3d3;
+}
+
 .search-box-md {
   display: none;
 }
 
 .light .search-box .search-icon {
   background: transparent;
-}
-
-.search-icon .icon {
-  color: black;
 }
 
 .nav-links {
@@ -251,13 +266,18 @@ a {
 }
 
 .background-toggle-box {
-  border: 1px solid black;
+  border: 1px solid #444444;
   padding: 8px;
   border-radius: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  transition: all .5s ease;
+}
+
+.light .background-toggle-box {
+  border: 1px solid #d3d3d3;
 }
 
 .sign-up-container {
@@ -2324,6 +2344,14 @@ td .admin-delete-post {
   padding-bottom: 1rem;
 }
 
+.pagination {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
 .view-more {
   color: #e0e0e0;
   font-size: 1.2rem;
@@ -2921,11 +2949,25 @@ td .admin-delete-post {
 
   .search-box-md {
     width: 3rem;
-    border: 2px solid black;
+    border: 2px solid #444444;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
+    transition: all .5s ease;
+  }
+
+  .light .search-box-md {
+    border: 2px solid #d3d3d3;
+  }
+
+  .icon-md {
+    color: #444444;
+    transition: all .5s ease;
+  }
+
+  .light .icon-md {
+    color: #d3d3d3;
   }
 
   .search-box-md .search-icon {

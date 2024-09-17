@@ -13,6 +13,7 @@ const Search = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showMore, setShowMore] = useState(false);
+    const [showLess, setShowLess] = useState(false); // Added for show less
     const [openSort, setOpenSort] = useState(false);
     const [openCategory, setOpenCategory] = useState(false);
     const [sideBar, setSideBar] = useState(false);
@@ -50,10 +51,17 @@ const Search = () => {
                 setPosts(data.posts);
                 setLoading(false);
 
-                if (data.posts.length === 9) {
+                if (data.posts.length >= 9) {
                     setShowMore(true);
                 } else {
                     setShowMore(false);
+                }
+
+                // Show "View Less" only if more than the initial 9 posts are visible
+                if (data.posts.length > 9) {
+                    setShowLess(true);
+                } else {
+                    setShowLess(false);
                 }
             }
         }
@@ -105,6 +113,19 @@ const Search = () => {
             } else {
                 setShowMore(false);
             }
+
+            // Show "View Less" if more than 9 posts are visible
+            setShowLess(posts.length + data.posts.length > 9);
+        }
+    }
+
+    // Handle View Less
+    const handleViewLess = () => {
+        // Show only the first 9 posts
+        if (posts.length > 9) {
+            setPosts(posts.slice(0, 9)); // Set posts back to the first 9
+            setShowMore(true); // Enable the View More button again
+            setShowLess(false); // Hide the View Less button once we're at the limited posts
         }
     }
 
@@ -255,9 +276,14 @@ const Search = () => {
                                 <PostCard key={post._id} post={post} />
                             ))}
                         </div>
-                        {showMore && (
-                            <p className='view-more' onClick={handleViewMore}>View more</p>
-                        )}
+                        <div className="pagination">
+                            {showMore && (
+                                <p className='view-more' onClick={handleViewMore}>View more</p>
+                            )}
+                            {showLess && (
+                                <p className='view-more' onClick={handleViewLess}>View less</p>
+                            )}
+                        </div>
                     </motion.div>}
                 </div>
             </div>

@@ -114,7 +114,7 @@ const Header = () => {
             </form>
             <form onSubmit={handleSubmit} className="search-box-md">
                 <button type='submit' className="search-icon">
-                    <FaSearch className='icon' />
+                    <FaSearch className='icon-md' />
                 </button>
             </form>
             <div className={`right-items ${sideBar ? 'active' : 'inactive'}`}>
