@@ -114,7 +114,7 @@ const PostPage = () => {
           <motion.h1 
           initial={{
             opacity: 0,
-            translateY: -100,
+            translateY: -200,
           }}
           animate={{
             opacity: 1,
@@ -122,7 +122,7 @@ const PostPage = () => {
           }}
           exit={{
             opacity: 0,
-            translateY: -100
+            translateY: -200
           }}
           className='post-title'>{post && post.title}</motion.h1>
           <div className='category-author'>

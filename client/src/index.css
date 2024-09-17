@@ -1309,8 +1309,6 @@ td .admin-delete-post {
 
 .post-item-box .post-content {
   width: 100%;
-  max-height: 30rem;
-  overflow: auto;
 }
 
 .comment-section {
@@ -2251,7 +2249,7 @@ td .admin-delete-post {
   border-radius: 10px;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: .5rem;
   justify-content: center;
   height: 2.5rem;
   width: 200px;
@@ -2393,9 +2391,18 @@ td .admin-delete-post {
 
 .form-intro {
   text-align: center;
+  padding: 0 1rem;
+  overflow: hidden;
+}
+
+.form-intro h2 {
   transition: all .5s ease;
   transition-delay: .5s;
-  padding: 0 1rem;
+}
+
+.form-intro p {
+  transition: all .5s ease;
+  transition-delay: .5s;
 }
 
 .contact-page-main {
@@ -2475,7 +2482,7 @@ td .admin-delete-post {
 
 @media (max-width: 1350px) {
   .search-side-bar {
-    border-right: 0;
+    border-right: 0px;
   }
 
   .search-side-bar .search-form {
@@ -2556,8 +2563,8 @@ td .admin-delete-post {
   }
 
   .user-admin-icon {
-    background-color: #121212;
-    box-shadow: inset 0 0 .8rem #444444;
+    background-color: #444444;
+    border: 1px solid #121212;
     font-size: 4rem;
     padding: 10px;
     border-radius: 10px;
@@ -2569,8 +2576,8 @@ td .admin-delete-post {
   }
 
   .light .user-admin-icon {
-    background-color: #f5f5dc;
-    box-shadow: 0 0 .8rem #d3d3d3;
+    background-color: #d3d3d3;
+    border: 1px solid #f5f5f5;
   }
 
   .user-admin-icon.active {
@@ -2974,6 +2981,10 @@ td .admin-delete-post {
   .form-search-item input,
   .form-search-item button {
     width: 150px;
+  }
+
+  .form-search-item button {
+    text-align: center;
   }
 
   .post-card-item {

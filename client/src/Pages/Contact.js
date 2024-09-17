@@ -63,10 +63,11 @@ const Contact = () => {
 
   return (
     <div className='contact-page'>
-      <motion.div
-        initial={{
+      <div className="form-intro">
+        <motion.h2 
+         initial={{
           opacity: 0,
-          translateY: -100,
+          translateY: -200,
         }}
         animate={{
           opacity: 1,
@@ -74,12 +75,24 @@ const Contact = () => {
         }}
         exit={{
           opacity: 0,
-          translateY: -100
+          translateY: -200
         }}
-       className="form-intro">
-        <h2 className='love-text'>We’d Love to Hear from You</h2>
-        <p>Whether you have a suggestion, want to work together, or simply have a question, this is the place to reach us!</p>
-      </motion.div>
+        className='love-text'>We’d Love to Hear from You</motion.h2>
+        <motion.p
+         initial={{
+          opacity: 0,
+          translateY: -200,
+        }}
+        animate={{
+          opacity: 1,
+          translateY: 0
+        }}
+        exit={{
+          opacity: 0,
+          translateY: -200
+        }}
+        >Whether you have a suggestion, want to work together, or simply have a question, this is the place to reach us!</motion.p>
+      </div>
       <div className="contact-page-main">
         <motion.form 
         initial={{

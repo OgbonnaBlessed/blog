@@ -65,7 +65,7 @@ const Home = () => {
   }, []);
 
   // Function to truncate post content to 500 characters max
-  const truncateContent = (content, maxLength = 500) => {
+  const truncateContent = (content, maxLength = 200) => {
     if (content.length > maxLength) {
       return content.slice(0, maxLength) + '...';
     }
