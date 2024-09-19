@@ -205,16 +205,16 @@ a {
 }
 
 .light .search-box {
-  border: 2px solid #d3d3d3;
+  border: 2px solid #5e5e5e;
 }
 
 .search-icon .icon {
-  color: #c5a900;
+  color: #4a4a4a;
   transition: all .5s ease;
 }
 
 .light .search-icon .icon {
-  color: #ffd700;
+  color: #5e5e5e;
 }
 
 .search-box-md {
@@ -277,7 +277,7 @@ a {
 }
 
 .light .background-toggle-box {
-  border: 2px solid #d3d3d3;
+  border: 2px solid #5e5e5e;
 }
 
 .sign-up-container {
@@ -1160,9 +1160,20 @@ form .publish-button {
 
 .bookmarks-container {
   width: 82%;
-  min-height: 100vh;
+  height: 100%;
   padding-top: 7rem;
   padding-bottom: 3rem;
+}
+
+.posts-all-bookmarks {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 2rem;
+  justify-content: center;
+  place-items: center;
+  align-items: start;
 }
 
 .dashboard-posts-list {
@@ -2808,6 +2819,13 @@ td .admin-delete-post {
     width: 100%;
   }
 
+  .posts-all-bookmarks {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: start;
+    width: 100%;
+  }
+
   .collection-summary {
     width: 100%;
     display: grid;
@@ -3001,6 +3019,12 @@ td .admin-delete-post {
     grid-template-columns: repeat(1, 1fr);
   }
 
+  .posts-all-bookmarks {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    row-gap: 2rem;
+  }
+
   .search-post-display-head {
     padding: 1.5rem;
   }
@@ -3052,16 +3076,16 @@ td .admin-delete-post {
   }
 
   .light .search-box-md {
-    border: 2px solid #d3d3d3;
+    border: 2px solid #5e5e5e;
   }
 
   .icon-md {
-    color: #c5a900;
+    color: #4a4a4a;
     transition: all .5s ease;
   }
 
   .light .icon-md {
-    color: #ffd700;
+    color: #5e5e5e;
   }
 
   .search-box-md .search-icon {
@@ -3169,8 +3193,4 @@ td .admin-delete-post {
   form .publish-button {
     margin-top: 2rem;
   }
-
-  /* .input-fields .input-container input {
-    width: 300px;
-  } */
 }

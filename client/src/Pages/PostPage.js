@@ -105,47 +105,53 @@ const PostPage = () => {
   }, [currentUser]);
 
   const handleBookmarkClick = async () => {
-    try {
-      const isPostBookmarked = isBookmarked.includes(post._id);
-
-      if (isPostBookmarked) {
-        const res = await fetch(`/api/user/${currentUser._id}/bookmark/${post._id}`, {
-          method: 'DELETE',
-        });
-
-        // const data = await res.json();
-
-        if (res.ok) {
-          setMessage('Removed from bookmark');
-          setIsBookmarked((prev) => prev.filter(id => id !== post._id));
-
+    if (currentUser) {
+      try {
+        const isPostBookmarked = isBookmarked.includes(post._id);
+  
+        if (isPostBookmarked) {
+          const res = await fetch(`/api/user/${currentUser._id}/bookmark/${post._id}`, {
+            method: 'DELETE',
+          });
+  
+          // const data = await res.json();
+  
+          if (res.ok) {
+            setMessage('Removed from bookmark');
+            setIsBookmarked((prev) => prev.filter(id => id !== post._id));
+  
+          } else {
+            setMessage('something went wrong, please try again later');
+          }
+  
         } else {
-          setMessage('something went wrong, please try again later');
+          const res = await fetch(`/api/user/${currentUser._id}/bookmark/${post._id}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ postId: post._id }),
+          });
+  
+          // const data = await res.json();
+  
+          if (res.ok) {
+            setMessage('Added to bookmark');
+            setIsBookmarked((prev) => [...prev, post._id]);
+  
+          } else {
+            setMessage('something went wrong, please try again later');
+          }
         }
-
-      } else {
-        const res = await fetch(`/api/user/${currentUser._id}/bookmark/${post._id}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ postId: post._id }),
-        });
-
-        // const data = await res.json();
-
-        if (res.ok) {
-          setMessage('Added to bookmark');
-          setIsBookmarked((prev) => [...prev, post._id]);
-
-        } else {
-          setMessage('something went wrong, please try again later');
-        }
+  
+        
+      } catch (error) {
+        console.error(error.message);
       }
-
-      setTimeout(() => setMessage(null), 2000);
-
-    } catch (error) {
-      console.error(error.message);
+      
+    } else {
+      setMessage('You have to sign in')
     }
+
+    setTimeout(() => setMessage(null), 2000);
   };
 
   const spinnerStyle = {

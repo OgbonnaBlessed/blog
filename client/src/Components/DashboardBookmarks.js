@@ -51,7 +51,7 @@ const DashboardBookmarks = () => {
 
   return (
     <div className='bookmarks-container'>
-      <div className="posts-all-box posts-all-bookmarks">
+      <div className="posts-all-bookmarks">
         {bookmarkedPosts.length > 0 && (
             bookmarkedPosts.map((bookmark, i) => (
                 <div className='bookmark-post' key={i}>
