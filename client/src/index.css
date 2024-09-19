@@ -1158,6 +1158,13 @@ form .publish-button {
   height: 20rem;
 }
 
+.bookmarks-container {
+  width: 82%;
+  min-height: 100vh;
+  padding-top: 7rem;
+  padding-bottom: 3rem;
+}
+
 .dashboard-posts-list {
   width: 82%;
   height: 100%;
@@ -1269,7 +1276,66 @@ td .admin-delete-post {
   align-items: center;
   justify-content: center;
   padding-bottom: 1rem;
+  position: relative;
   overflow: hidden;
+}
+
+.bookmark-message-box {
+  position: absolute;
+  top: 8rem;
+  right: 1.5rem;
+}
+
+.bookmark-message-post {
+  position: absolute;
+  font-size: 1rem;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #00000085;
+  right: 0;
+  /* width: fit-content;
+  display: block; */
+  text-wrap: nowrap;
+  color: #ffffff;
+  transition: all .5s ease;
+}
+
+.bookmark-icon {
+  position: absolute;
+  right: 0;
+  top: 8rem;
+  cursor: pointer;
+  transition: all .5s ease;
+}
+
+.bookmark-icon-post {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  transition: all .5s ease;
+}
+
+.bookmark-post {
+  position: relative;
+  height: fit-content;
+  width: fit-content;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  transition: all .5s ease;
+  overflow: hidden;
+}
+
+.remove-bookmark {
+  color: red;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all .5s ease;
 }
 
 .post-item-box .post-title {
@@ -1634,6 +1700,8 @@ td .admin-delete-post {
   border-bottom-right-radius: 30px;
   background: black;
   display: flex;
+  position: relative;
+  overflow: hidden;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
@@ -1644,6 +1712,18 @@ td .admin-delete-post {
 .light .post-card-item {
   background-color: #ffffff;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+}
+
+.bookmark-message {
+  position: absolute;
+  top: 10px;
+  right: 2rem;
+  background-color: #00000085;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: #ffffff;
+  transition: all .5s ease;
 }
 
 .post-card-item img {
@@ -2320,6 +2400,14 @@ td .admin-delete-post {
   justify-content: center;
 }
 
+.spinner-container-bookmark {
+  width: 82%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .posts-all-container {
   width: 100%;
   min-height: 100vh;
@@ -2630,11 +2718,19 @@ td .admin-delete-post {
     max-width: 100%;
   }
 
+  .bookmarks-container {
+    width: 100%;
+  }
+
   .dashboard-posts-list {
     width: 100%;
   }
 
   .collection-container {
+    width: 100%;
+  }
+
+  .spinner-container-bookmark {
     width: 100%;
   }
 }

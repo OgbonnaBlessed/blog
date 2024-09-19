@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaComments, FaUser, FaUsers, FaUserShield } from 'react-icons/fa'
+import { FaBookmark, FaComments, FaUser, FaUsers, FaUserShield } from 'react-icons/fa'
 import { HiDocumentText } from 'react-icons/hi'
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom'
@@ -7,6 +7,7 @@ import { signOutSuccess } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { MdLogout, MdDashboard } from 'react-icons/md'
+import { fetchBookmarks } from '../redux/bookmark/bookmarkSlice';
 
 const DashboardSidebar = () => {
   const [tab, setTab] = useState('');
@@ -14,6 +15,8 @@ const DashboardSidebar = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { currentUser } = useSelector(state => state.user);
+  const totalBookmarks = useSelector((state) => state.bookmarks.totalBookmarks);
+
 
   const sidebarRef = useRef();
 
@@ -30,6 +33,12 @@ const DashboardSidebar = () => {
             document.removeEventListener('mousedown', closeProfileBox);
       };
   });
+
+  useEffect(() => {
+    if (currentUser) {
+      dispatch(fetchBookmarks(currentUser._id));
+    }
+  }, [currentUser, dispatch]);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -114,6 +123,15 @@ const DashboardSidebar = () => {
             </Link>
           </>
           )}
+          <Link 
+          to={'/Dashboard?tab=bookmarks'} 
+          onClick={() => setSideBar(false)}
+          className={`profile-direct ${tab === 'bookmarks' ? 'active' : ''}`}
+          >
+            <FaBookmark size={25} />
+            <p>Bookmarks</p>
+            <span className='bookmark-items'>{totalBookmarks}</span>
+        </Link>
         <div 
           className="sign-out" 
           onClick={() => {

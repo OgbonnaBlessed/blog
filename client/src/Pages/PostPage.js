@@ -3,6 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import CommentSection from '../Components/CommentSection';
 import Author from '../Components/Author';
 import { motion } from 'framer-motion';
+import { FaBookmark } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 const PostPage = () => {
   const { postSlug } = useParams();
@@ -11,6 +13,10 @@ const PostPage = () => {
   const [post, setPost] = useState(null);
   const [recentPosts, setRecentPosts] = useState([]);
   const [relatedPosts, setRelatedPosts] = useState([]);
+  const [isBookmarked, setIsBookmarked] = useState([]);
+  const [message, setMessage] = useState(null);
+  const { theme } = useSelector(state => state.theme);
+  const { currentUser } = useSelector((state) => state.user);
 
   // Fetch the current post by its slug
   useEffect(() => {
@@ -78,6 +84,70 @@ const PostPage = () => {
     }
   }, [post, postSlug]);
 
+  useEffect(() => {
+    if (currentUser) {
+      const checkBookmarkStatus = async () => {
+        try {
+          const res = await fetch(`/api/user/${currentUser._id}/bookmarks`);
+
+          if (res.ok) {
+            const data = await res.json();
+            setIsBookmarked(data.bookmarks.map(bookmark => bookmark._id));  // Store bookmarked post IDs
+          }
+
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
+
+      checkBookmarkStatus();
+    }
+  }, [currentUser]);
+
+  const handleBookmarkClick = async () => {
+    try {
+      const isPostBookmarked = isBookmarked.includes(post._id);
+
+      if (isPostBookmarked) {
+        const res = await fetch(`/api/user/${currentUser._id}/bookmark/${post._id}`, {
+          method: 'DELETE',
+        });
+
+        // const data = await res.json();
+
+        if (res.ok) {
+          setMessage('Removed from bookmark');
+          setIsBookmarked((prev) => prev.filter(id => id !== post._id));
+
+        } else {
+          setMessage('something went wrong, please try again later');
+        }
+
+      } else {
+        const res = await fetch(`/api/user/${currentUser._id}/bookmark/${post._id}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ postId: post._id }),
+        });
+
+        // const data = await res.json();
+
+        if (res.ok) {
+          setMessage('Added to bookmark');
+          setIsBookmarked((prev) => [...prev, post._id]);
+
+        } else {
+          setMessage('something went wrong, please try again later');
+        }
+      }
+
+      setTimeout(() => setMessage(null), 2000);
+
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
   const spinnerStyle = {
     border: '4px solid rgba(0, 0, 0, 0.1)',
     width: '80px',
@@ -111,6 +181,31 @@ const PostPage = () => {
     className='post-page'>
       <div className='post-page-container'>
         <div className='post-item-box'>
+          <FaBookmark 
+            className='bookmark-icon'
+            onClick={handleBookmarkClick}
+                        style={{
+                          color: isBookmarked.includes(post._id) ? '#444444' : theme === 'dark' ? 'white' : 'black'
+                    }}/>
+      <div className="bookmark-message-box">
+        {message && 
+          <motion.div 
+            initial={{
+              opacity: 0,
+              translateY: -50,
+            }}
+            animate={{
+              opacity: 1,
+              translateY: 0
+            }}
+            exit={{
+              opacity: 0,
+              translateY: -50
+            }}
+            className="bookmark-message-post"
+            >{message}</motion.div>
+          }
+      </div>
           <motion.h1 
           initial={{
             opacity: 0,

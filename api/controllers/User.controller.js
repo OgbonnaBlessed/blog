@@ -132,3 +132,67 @@ export const getUser = async (req, res, next) => {
         next(error);
     }
 }
+
+// Add a bookmark
+export const addBookmark = async (req, res, next) => {
+    const { userId, postId } = req.params;
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) return next(errorHandler(404, "User not found!"));
+
+        // Check if post is already bookmarked
+        if (user.bookmarks.includes(postId)) {
+            return res.status(400).json({ message: "Post already bookmarked" });
+        }
+
+        // Add the post to the user's bookmarks
+        user.bookmarks.push(postId);
+        await user.save();
+
+        res.status(200).json({ message: "Post bookmarked successfully", bookmarks: user.bookmarks });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Remove a bookmark
+export const removeBookmark = async (req, res, next) => {
+    const { userId, postId } = req.params;
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) return next(errorHandler(404, "User not found!"));
+
+        // Check if post is in bookmarks
+        if (!user.bookmarks.includes(postId)) {
+            return res.status(400).json({ message: "Post not found in bookmarks" });
+        }
+
+        // Remove the post from the user's bookmarks
+        user.bookmarks = user.bookmarks.filter(bookmark => bookmark.toString() !== postId);
+        await user.save();
+
+        res.status(200).json({ message: "Post removed from bookmarks", bookmarks: user.bookmarks });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Get all bookmarks for a user
+export const getBookmarks = async (req, res, next) => {
+    const { userId } = req.params;
+
+    try {
+        const user = await User.findById(userId).populate('bookmarks');  // Populate the bookmarks with Post details
+        if (!user) return next(errorHandler(404, "User not found!"));
+
+        res.status(200).json({
+            bookmarks: user.bookmarks,
+            totalBookmarks: user.bookmarks.length,
+        });
+        
+    } catch (error) {
+        next(error);
+    }
+};
