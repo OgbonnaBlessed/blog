@@ -186,7 +186,11 @@ const DashBoardCollection = () => {
                 {comments.map((comment, i) => (
                 <tbody key={i}>
                     <tr>
-                        <td data-label="Content">{comment.content}</td>
+                        <td data-label="Content">
+                            <span  className='text-wrap'>
+                                {comment.content}
+                            </span>
+                        </td>
                         <td data-label="Likes">{comment.numberOfLikes}</td>
                     </tr>
                 </tbody>
@@ -215,7 +219,11 @@ const DashBoardCollection = () => {
                     <td data-label="Post image">
                         <img src={post.image} alt="" />
                     </td>
-                    <td data-label="Title">{post.title}</td>
+                    <td data-label="Title">
+                        <span className='text-wrap'>
+                          {post.title}
+                        </span>
+                    </td>
                     <td data-label="Category">{post.category}</td>
                 </tr>
             </tbody>

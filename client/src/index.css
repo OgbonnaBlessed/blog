@@ -1204,6 +1204,11 @@ form .publish-button {
   /* -webkit-overflow-scrolling: touch; */
 }
 
+.text-wrap {
+  max-width: 200px;
+  text-wrap: wrap;
+}
+
 table {
   width: 100%;
   border-collapse: collapse; /* Ensures borders are merged */
@@ -2871,12 +2876,20 @@ td .admin-delete-post {
     position: relative;
   }
 
+  
   tbody td::before {
     content: attr(data-label);
     position: absolute;
     right: 1rem;
     /* width: 100%; */
     /* padding-left: 1rem; */
+    font-weight: bold;
+  }
+
+  .text-wrap::before {
+    content: attr(data-label);
+    position: absolute;
+    right: 1rem;
     font-weight: bold;
   }
 

@@ -106,7 +106,9 @@ const DashBoardComments = () => {
                         <tr>
                             <td data-label="Date updated">{new Date(comment.updatedAt).toLocaleDateString()}</td>
                             <td data-label="Content">
-                                {comment.content}
+                                <span className='text-wrap'>
+                                    {comment.content}
+                                </span>
                             </td>
                             <td data-label="Likes">
                                 {comment.numberOfLikes}

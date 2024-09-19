@@ -113,7 +113,7 @@ const DashBoardPosts = () => {
                                 </Link>
                             </td>
                             <td data-label="Post title">
-                                <Link to={`/post/${post.slug}`}>
+                                <Link to={`/post/${post.slug}`} className='text-wrap'>
                                     {post.title}
                                 </Link>
                             </td>
