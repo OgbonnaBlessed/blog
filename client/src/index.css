@@ -2960,7 +2960,10 @@ td .admin-delete-post {
     border-radius: 20px;
     display: flex;
     flex-direction: column-reverse;
-    width: 10rem;
+    align-items: center;
+    justify-content: center;
+    width: 15rem;
+    height: auto;
     padding: 1rem;
     gap: 1rem;
   }
@@ -2981,6 +2984,36 @@ td .admin-delete-post {
     opacity: 0;
     visibility: hidden;
     transition: all .5s ease;
+  }
+
+  .user-info-drop-down {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    font-size: 1.2rem;
+    background: transparent;
+    flex-direction: column;
+    position: relative;
+    left: 0;
+  }
+
+  .user-info-drop-down.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50px);
+    transition: all .5s ease;
+  }
+  
+  .user-info-drop-down.inactive {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50px);
+    transition: all .5s ease;
+  }
+
+  .user-info {
+    margin-left: 5rem;
   }
 
   .nav-links {

@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { toggleTheme } from '../redux/theme/themeSlice'
 import { MdSunny } from 'react-icons/md'
 import { signOutSuccess } from '../redux/user/userSlice'
-import { IoChevronDownOutline } from 'react-icons/io5'
+import { BsThreeDotsVertical } from 'react-icons/bs'
 
 const Header = () => {
     const { currentUser } = useSelector(state => state.user);
@@ -175,7 +175,7 @@ const Header = () => {
         
                 }
             </div>
-                <IoChevronDownOutline className='sidebar-drop-icon' onClick={() => setSideBar(!sideBar)}/>
+                <BsThreeDotsVertical className='sidebar-drop-icon' onClick={() => setSideBar(!sideBar)}/>
         </div>
       </div>
     )
