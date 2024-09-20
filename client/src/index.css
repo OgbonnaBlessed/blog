@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  outline: none !important;
 }
 
 :root {
@@ -69,6 +70,13 @@ a {
 ::-webkit-scrollbar-thumb {
   background-color: grey;
   cursor: grabbing;
+}
+
+button, input, textarea, a, p,
+.bookmark-icon, .bookmark-icon-post,
+.reveal-search-bar, .background-toggle-box {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
 }
 
 .nav-container {
@@ -2986,6 +2994,14 @@ td .admin-delete-post {
     transition: all .5s ease;
   }
 
+  .user-info-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
   .user-info-drop-down {
     display: flex;
     align-items: center;
@@ -2995,7 +3011,9 @@ td .admin-delete-post {
     background: transparent;
     flex-direction: column;
     position: relative;
+    padding: 0;
     left: 0;
+    padding-bottom: 10px;
   }
 
   .user-info-drop-down.active {
@@ -3012,8 +3030,14 @@ td .admin-delete-post {
     transition: all .5s ease;
   }
 
-  .user-info {
-    margin-left: 5rem;
+  .light .user-info-drop-down {
+    background: transparent;
+    color: #e0e0e0;
+    border: none;
+  }
+
+  .light .user-info-drop-down a {
+    color: #e0e0e0;
   }
 
   .nav-links {

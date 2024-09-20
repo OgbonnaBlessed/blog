@@ -98,10 +98,10 @@ const Header = () => {
     return (
       <div className={`nav-container ${hideHeader ? 'hide' : ''}`}>
         <div className="nav-box" ref={sidebarRef}>
-            <div className="nav-logo">
+            <Link to='/' className="nav-logo" onClick={() => setSideBar(false)}>
                 <p className='This'>This</p>
                 <p className='Jesus'>Jesus</p>
-            </div>
+            </Link>
             <form onSubmit={handleSubmit} className="search-box">
                 <input 
                     type="text" 
