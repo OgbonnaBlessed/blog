@@ -280,7 +280,13 @@ const Search = () => {
                                 </p>
                             )}
                             {showLess && (
-                                <p className='view-more' onClick={handleViewLess}>
+                                <p 
+                                    className='view-more' 
+                                    onClick={() => {
+                                        handleViewLess()
+                                        window.scrollTo(0, 0)
+                                    }}
+                                >
                                     View less
                                 </p>
                             )}
