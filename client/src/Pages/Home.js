@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FaAngleLeft, FaAngleRight, FaCheck } from 'react-icons/fa';
+import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Author from '../Components/Author';
 import { motion } from 'framer-motion';
@@ -249,7 +249,6 @@ const Home = () => {
                   <p>{truncateTitleItem(post.title)}</p>
                   <div className="Author-box">
                     <Author post={post}/>
-                    <FaCheck className='author-icon'/>
                   </div>
                 </div>
                 <Link to={`/post/${post.slug}`}>

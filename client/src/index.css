@@ -1306,7 +1306,7 @@ td .admin-delete-post {
 
 .bookmark-message-box {
   position: absolute;
-  top: 8rem;
+  top: 0.5rem;
   right: 1.5rem;
 }
 
@@ -1327,7 +1327,6 @@ td .admin-delete-post {
 .bookmark-icon {
   position: absolute;
   right: 0;
-  top: 8rem;
   cursor: pointer;
   transition: all .5s ease;
 }
@@ -1360,6 +1359,12 @@ td .admin-delete-post {
   cursor: pointer;
   overflow: hidden;
   transition: all .5s ease;
+}
+
+.verified {
+  max-height: 40px;
+  max-width: 40px;
+  border-radius: 50%;
 }
 
 .post-item-box .post-title {
@@ -1399,6 +1404,10 @@ td .admin-delete-post {
 
 .category-author {
   display: flex;
+  position: relative;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
   gap: 1rem;
   align-items: center;
   transition: all .5s ease;
@@ -1633,7 +1642,9 @@ td .admin-delete-post {
 }
 
 .Author {
-  border: 1px solid rgb(255, 72, 0);
+  display: flex;
+  align-items: center;
+  gap: 5px;
   border-radius: 20px;
   cursor: pointer;
 }
@@ -2449,6 +2460,7 @@ td .admin-delete-post {
   min-height: 100vh;
   grid-template-columns: repeat(3, 1fr);
   place-items: center;
+  align-items: start;
   /* column-gap: 1rem; */
   row-gap: 2rem;
   padding-bottom: 1rem;
@@ -2828,7 +2840,6 @@ td .admin-delete-post {
   .posts-all-box {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    place-items: center;
     width: 100%;
   }
 

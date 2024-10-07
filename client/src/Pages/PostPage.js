@@ -187,31 +187,6 @@ const PostPage = () => {
     className='post-page'>
       <div className='post-page-container'>
         <div className='post-item-box'>
-          <FaBookmark 
-            className='bookmark-icon'
-            onClick={handleBookmarkClick}
-                        style={{
-                          color: isBookmarked.includes(post._id) ? '#444444' : theme === 'dark' ? 'white' : 'black'
-                    }}/>
-      <div className="bookmark-message-box">
-        {message && 
-          <motion.div 
-            initial={{
-              opacity: 0,
-              translateY: -50,
-            }}
-            animate={{
-              opacity: 1,
-              translateY: 0
-            }}
-            exit={{
-              opacity: 0,
-              translateY: -50
-            }}
-            className="bookmark-message-post"
-            >{message}</motion.div>
-          }
-      </div>
           <motion.h1 
           initial={{
             opacity: 0,
@@ -231,6 +206,31 @@ const PostPage = () => {
               <button type='button'>{post && post.category}</button>
             </Link>
             <Author post={post} />
+            <FaBookmark 
+            className='bookmark-icon'
+            onClick={handleBookmarkClick}
+                        style={{
+                          color: isBookmarked.includes(post._id) ? '#444444' : theme === 'dark' ? 'white' : 'black'
+                    }}/>
+             <div className="bookmark-message-box">
+              {message && 
+                <motion.div 
+                  initial={{
+                    opacity: 0,
+                    translateY: -50,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    translateY: 0
+                  }}
+                  exit={{
+                    opacity: 0,
+                    translateY: -50
+                  }}
+                  className="bookmark-message-post"
+                  >{message}</motion.div>
+                }
+            </div>
           </div>
           <img src={post.image} alt='' />
           <div className='post-sub-info'>
