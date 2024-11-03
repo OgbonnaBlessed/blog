@@ -1,12 +1,14 @@
-# This Jesus - A Faith-based Blog Platform
+![This_Jesus](https://github.com/user-attachments/assets/3fd1cd0e-8374-40f5-a21a-f6c4852a494d)
+
+# This Jesus
+![Static Badge](https://img.shields.io/badge/Faith%20based%20blog-8A2BE2)
+ ![GitHub last commit](https://img.shields.io/github/last-commit/OgbonnaBlessed/blog)
 
 Welcome to **This Jesus**, a faith-centered blogging platform built using **MERN stack** (MongoDB, Express, ReactJS, NodeJS). 
 
 This project allows users to create accounts, interact with Life giving, Soul lifting contents, as well as explore teachings related to the Christian faith, with a focus on sharing the love of Christ.
 
-This platform includes two main types of users, which are the: **Authors** and **Regular Users**. While **Regular Users** can only go through articles and leave their comments, **Authors** are able to create, edit, delete posts and comments. 
-
-The project uses modern design and animations to provide a smooth user experience, with Framer Motion, which brings the static pages of the website to life.
+This platform includes two main types of users, which are the: **Authors** and **Regular Users**. While **Regular Users** can only go through articles and leave their comments, **Authors** are able to create, edit, delete articles and comments. 
 
 ## Table of Contents
 - [Technologies](#technologies)
@@ -38,7 +40,7 @@ The website is built using the **MERN Stack**, alongside other notable tools:
 ### General Features
 - **User Authentication**: Secure signup and login system using JWT.
 - **User Profiles**: Every user has a unique profile.
-- **Comments System**: Users can comment on posts. Comments can only be edited or deleted by their creators or an author.
+- **Comments System**: Users can comment on articles. Comments can only be edited or deleted by their creators or an author.
 - **Responsive Design**: The website is fully responsive across all devices.
 - **Smooth Animations**: Using Framer Motion for enhanced UX.
 - **Search Functionality**: Users can search for articles by category, or by a search term.
@@ -102,7 +104,6 @@ cd Blog
     ```bash
     MONGO_URI=<Your MongoDB URI>
     JWT_SECRET=<Your Secret Key>
-    PORT=5000
     ```
 
 4. Start the backend server:
@@ -131,7 +132,7 @@ cd Blog
     npm start
     ```
 
-Your backend server will run on `http://localhost:5000` and your frontend on `http://localhost:3000`.
+Your backend server will run on `http://localhost:3000` and your frontend on `http://localhost:3001`.
 
 ## Backend API Documentation
 
@@ -140,19 +141,32 @@ Your backend server will run on `http://localhost:5000` and your frontend on `ht
 - `POST /api/auth/signin`: Login a user and receive a JWT token.
 
 ### User Endpoints
-- `GET /api/user:id`: Retrieve a user’s profile by ID.
-- `DELETE /api/user:id`: Delete a user account (author privileges).
+- `GET /api/user/:userId`: Retrieve a user’s profile by ID.
+- `DELETE /api/user/:userId`: Delete a user account.
+- `PUT /api/user/update/:userId`: Update a user account.
+- `POST /api/user/signout`: Signout a user.
+- `GET /api/user/getusers`: Fetch all users (Author privilege).
+- `POST /api/user/:userId/bookmark/:postId`: Add an article to bookmarks.
+- `DELETE /api/user/:userId/bookmark/:postId`: Remove the article from bookmarks.
+- `GET /api/user/:userId/bookmarks`: Fetch all bookmarks for a user.
 
 ### Post Endpoints
-- `GET /api/post/getposts`: Retrieve all posts.
-- `POST /api/post/createPost`: Create a new post (author privileges).
-- `PUT /api/post/post:id/updatePost`: Update a post by ID (author privileges).
-- `DELETE /api/post/post:id/deletePost`: Delete a post by ID (author privileges).
+- `GET /api/post/getposts`: Retrieve all articles.
+- `POST /api/post/createPost`: Create a new article (author privileges).
+- `PUT /api/post/post:id/updatePost`: Update a article by ID (author privileges).
+- `DELETE /api/post/post:id/deletePost`: Delete an article by ID (author privileges).
+- `GET /api/post/getrelatedposts`: Retrieve all related articles for the currently viewed article.
 
 ### Comment Endpoints
-- `POST /api/comment`: Add a comment to a post.
-- `PUT /api/comments/:id`: Update a comment by ID (author or comment creator privileges).
-- `DELETE /api/comments/:id`: Delete a comment by ID (author or comment creator privileges).
+- `POST /api/comment/comment`: Add a comment to a post.
+- `PUT /api/comment/editcomment/:commentId`: Update a comment by ID (author or comment creator privileges).
+- `DELETE /api/comment/deletecomment/:commentId`: Delete a comment by ID (author or comment creator privileges).
+- `GET /api/comment/getcomments`: Retrieve all comments (Author privileges).
+- `PUT /api/comment/likecomment/:commentId`: Like a comment by ID.
+- `POST /api/comment/getpostcomments/:postId`: Retrieve all comment of an article by ID.
+
+### Subscription Endpoint
+- `POST /api/subscription/subscribe`: Subscribe to newsletter.
 
 ## Contributing
 Contributions are welcome! To contribute:
@@ -167,7 +181,7 @@ Contributions are welcome! To contribute:
 Listed below are the possible errors you might encounter whilst you build this. Plus, I've attached the solution to each problem.
 
 1. Proxy error: If your terminal keeps bringing a warning of not being able to proxy between two ports, you can do the below to solve such.
--  Add a '/' to the URL of your backend, that's the port on which your backend is running on
+-  Add a '/' to the URL of your backend, that's the port on which your backend is running on.
   
 
 ## License
