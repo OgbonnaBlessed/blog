@@ -19,22 +19,22 @@ const AnimatedRoutes = () => {
 
   return (
     <AnimatePresence>
-        <Routes location={location} key={location.pathname}>
-            <Route path='/' element={<Home/>} />
-            <Route path='/About' element={<About/>} />
-            <Route path='/Contact' element={<Contact/>} />
-            <Route path='/Post/:postSlug' element={<PostPage/>} />
-            <Route path='/signin' element={<SignIn/>} />
-            <Route path='/signup' element={<SignUp/>} />
-            <Route path='/search' element={<Search/>} />
-            <Route element={<PrivateRoute/>}>
-                <Route path='/Dashboard' element={<Dashboard/>} />
-            </Route>
-            <Route element={<OnlyAdminPrivateRoute/>}>
-            <Route path='/create-a-post' element={<CreatePost/>}/>
-            <Route path='/update-post/:postId' element={<UpdatePost/>}/>
-            </Route>
-        </Routes>
+      <Routes location={location} key={location.pathname}>
+        <Route path='/' element={<Home/>} />
+        <Route path='/About' element={<About/>} />
+        <Route path='/Contact' element={<Contact/>} />
+        <Route path='/Post/:postSlug' element={<PostPage/>} />
+        <Route path='/signin' element={<SignIn/>} />
+        <Route path='/signup' element={<SignUp/>} />
+        <Route path='/search' element={<Search/>} />
+        <Route element={<PrivateRoute/>}>
+          <Route path='/Dashboard' element={<Dashboard/>} />
+        </Route>
+        <Route element={<OnlyAdminPrivateRoute/>}>
+        <Route path='/create-a-post' element={<CreatePost/>}/>
+        <Route path='/update-post/:postId' element={<UpdatePost/>}/>
+        </Route>
+      </Routes>
     </AnimatePresence>
   )
 }

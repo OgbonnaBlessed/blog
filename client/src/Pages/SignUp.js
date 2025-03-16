@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import OAuth from '../Components/OAuth';
 import { useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaTimes } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaTimes } from 'react-icons/fa';
 
 // CSS for the spinner
 const spinnerStyle = {
@@ -20,6 +20,7 @@ const SignUp = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [showModal, setShowModal] = useState(false);  // Modal visibility state
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { theme } = useSelector(state => state.theme);
   const navigate = useNavigate();
 
@@ -98,15 +99,39 @@ const SignUp = () => {
         <form className="input-fields" onSubmit={handleSubmit}>
           <div className="input-container">
             <h3>Your username</h3>
-            <input type="text" id="username" onChange={handleChange} />
+            <input 
+              type="text" 
+              id="username" 
+              onChange={handleChange} 
+              autoComplete='off'
+            />
           </div>
           <div className="input-container">
             <h3>Your email</h3>
-            <input type="email" id="email" onChange={handleChange} />
+            <input 
+              type="email" 
+              id="email" 
+              onChange={handleChange} 
+              autoComplete='off'
+            />
           </div>
           <div className="input-container">
             <h3>Your password</h3>
-            <input type="password" id="password" onChange={handleChange} />
+            <div>
+              <input 
+                type={`${showPassword ? 'password' : 'text'}`} 
+                id="password" 
+                onChange={handleChange}
+                autoComplete='off'
+              />
+              <span onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? (
+                  <FaEye />
+                ): (
+                  <FaEyeSlash />
+                )}
+              </span>
+            </div>
           </div>
           <button type="submit" disabled={loading}>
             {loading ? (

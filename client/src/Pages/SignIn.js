@@ -4,7 +4,7 @@ import { signInSuccess, signInFailure, signInStart } from '../redux/user/userSli
 import { useDispatch, useSelector } from 'react-redux';
 import OAuth from '../Components/OAuth';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaTimes } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaTimes } from 'react-icons/fa';
 
 // CSS for the spinner
 const spinnerStyle = {
@@ -21,6 +21,7 @@ const SignIn = () => {
   const { loading, error: errorMessage } = useSelector(state => state.user);
   const { theme } = useSelector(state => state.theme);
   const [showModal, setShowModal] = useState(false);  // Modal visibility state
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -97,11 +98,31 @@ const SignIn = () => {
         <form className="input-fields" onSubmit={handleSubmit}>
           <div className="input-container">
             <h3>Your email</h3>
-            <input type="email" name="" id="email" onChange={handleChange}/>
+            <input 
+              type="email" 
+              id="email" 
+              onChange={handleChange}
+              autoComplete='off'
+            />
           </div>
           <div className="input-container">
             <h3>Your password</h3>
-            <input type="password" name="" id="password" onChange={handleChange}/>
+            <div>
+              <input 
+                type={`${showPassword ? 'password' : 'text'}`} 
+                name="" 
+                id="password" 
+                onChange={handleChange}
+                autoComplete='off'
+              />
+              <span onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? (
+                  <FaEye />
+                ): (
+                  <FaEyeSlash />
+                )}
+              </span>
+            </div>
           </div>
           <button type="submit" disabled={loading}>
             {

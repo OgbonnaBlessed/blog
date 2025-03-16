@@ -340,6 +340,18 @@ button, input, textarea, a, p,
   font-size: 1.2rem;
 }
 
+.input-container div {
+  position: relative;
+}
+
+.input-container span {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
 .input-container input {
   width: 22rem;
   height: 3rem;

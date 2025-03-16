@@ -174,6 +174,7 @@ export const removeBookmark = async (req, res, next) => {
         await user.save();
 
         res.status(200).json({ message: "Post removed from bookmarks", bookmarks: user.bookmarks });
+        
     } catch (error) {
         next(error);
     }
