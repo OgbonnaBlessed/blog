@@ -109,7 +109,7 @@ const SignIn = () => {
             <h3>Your password</h3>
             <div>
               <input 
-                type={`${showPassword ? 'password' : 'text'}`} 
+                type={`${showPassword ? 'text' : 'password'}`} 
                 name="" 
                 id="password" 
                 onChange={handleChange}
@@ -117,9 +117,9 @@ const SignIn = () => {
               />
               <span onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? (
-                  <FaEye />
-                ): (
                   <FaEyeSlash />
+                ): (
+                  <FaEye />
                 )}
               </span>
             </div>

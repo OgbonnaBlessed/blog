@@ -350,6 +350,11 @@ button, input, textarea, a, p,
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
+  color: black;
+  /* background-color: #000000; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .input-container input {

@@ -119,16 +119,16 @@ const SignUp = () => {
             <h3>Your password</h3>
             <div>
               <input 
-                type={`${showPassword ? 'password' : 'text'}`} 
+                type={`${showPassword ? 'text' : 'password'}`} 
                 id="password" 
                 onChange={handleChange}
                 autoComplete='off'
               />
               <span onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? (
-                  <FaEye />
-                ): (
                   <FaEyeSlash />
+                ): (
+                  <FaEye />
                 )}
               </span>
             </div>
